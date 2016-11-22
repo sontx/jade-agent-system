@@ -393,8 +393,7 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void showDisk() {
-		// TODO Auto-generated method stub
-
+		serverAgent.showDisk();
 	}
 
 	protected void logoutComputer() {
