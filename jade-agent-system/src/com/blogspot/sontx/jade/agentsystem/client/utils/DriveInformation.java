@@ -6,11 +6,6 @@ import java.util.List;
 
 import javax.swing.filechooser.FileSystemView;
 
-/**
- * @author trongvn13
- * 
- *         Nov 22, 2016 - 5:19:48 PM
- */
 public class DriveInformation {
 	private String letter;
 	private String typeDescription;

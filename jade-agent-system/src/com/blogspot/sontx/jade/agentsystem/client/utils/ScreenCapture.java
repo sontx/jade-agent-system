@@ -10,11 +10,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-/**
- * @author trongvn13
- *
- * Nov 22, 2016 - 4:03:52 PM
- */
 public class ScreenCapture {
 	public static void capture(String filePath) {
 		capture(filePath, "png");
