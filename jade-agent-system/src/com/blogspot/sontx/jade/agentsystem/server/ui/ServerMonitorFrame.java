@@ -19,6 +19,7 @@ import jade.domain.FIPAAgentManagement.AMSAgentDescription;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class ServerMonitorFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -176,13 +177,6 @@ public class ServerMonitorFrame extends JFrame {
 		JLabel lblNewLabel = new JLabel("Agents List");
 		lblNewLabel.setBounds(10, 115, 86, 14);
 		getContentPane().add(lblNewLabel);
-
-		table = new JTable();
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setShowHorizontalLines(false);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setBounds(10, 140, 437, 452);
-		getContentPane().add(table);
 
 		JLabel lblAgentInformation = new JLabel("Agent Information");
 		lblAgentInformation.setBounds(454, 113, 104, 14);
@@ -353,6 +347,16 @@ public class ServerMonitorFrame extends JFrame {
 		labConnectionServerIP = new JLabel("192.168.1.x");
 		labConnectionServerIP.setBounds(75, 11, 121, 14);
 		panel_4.add(labConnectionServerIP);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 141, 437, 451);
+		getContentPane().add(scrollPane);
+		
+				table = new JTable();
+				table.setBorder(new LineBorder(new Color(0, 0, 0)));
+				scrollPane.setViewportView(table);
+				table.setShowHorizontalLines(false);
+				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
 
 	protected void shutdownServer() {
