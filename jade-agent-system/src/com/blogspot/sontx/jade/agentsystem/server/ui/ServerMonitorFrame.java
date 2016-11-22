@@ -14,6 +14,10 @@ import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.table.DefaultTableModel;
 
+import com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent;
+
+import jade.content.lang.Codec.CodecException;
+import jade.content.onto.OntologyException;
 import jade.domain.FIPAAgentManagement.AMSAgentDescription;
 
 import javax.swing.ListSelectionModel;
@@ -23,6 +27,7 @@ import javax.swing.JScrollPane;
 
 public class ServerMonitorFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
+	private ServerAgent serverAgent;
 	private JTable table;
 	private JLabel labAgentId;
 	private JLabel labAgentName;
@@ -38,7 +43,8 @@ public class ServerMonitorFrame extends JFrame {
 	private JLabel labConnectionServerIP;
 	private JLabel labConnectionServerPort;
 
-	public ServerMonitorFrame() {
+	public ServerMonitorFrame(ServerAgent serverAgent) {
+		this.serverAgent = serverAgent;
 		setResizable(false);
 		setTitle("Server Monitor: Agent Management System");
 		setSize(834, 773);
@@ -361,6 +367,13 @@ public class ServerMonitorFrame extends JFrame {
 
 	protected void shutdownServer() {
 		if (JOptionPane.showConfirmDialog(this, "Do you want to shutdown server?") == JOptionPane.OK_OPTION) {
+			try {
+				serverAgent.shutdownJade();
+			} catch (CodecException | OntologyException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, e.getMessage());
+				return;
+			}
 			dispose();
 		}
 	}
