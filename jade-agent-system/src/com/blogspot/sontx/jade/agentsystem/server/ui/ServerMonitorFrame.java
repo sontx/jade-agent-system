@@ -538,6 +538,7 @@ public class ServerMonitorFrame extends JFrame {
 						"com.blogspot.sontx.jade.agentsystem.server.agent.ExampleAgent", new Object[] {});
 				agentController.start();
 				JOptionPane.showMessageDialog(this, "Created " + agentController.getName());
+				refreshAgentsList();
 			}
 		} catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
