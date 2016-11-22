@@ -43,6 +43,7 @@ public class ServerProgram {
 							mainContainer.createNewAgent("sontx",
 									"com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent",
 									new Object[] { savingImagesDirectory }).start();
+							mainContainer.createNewAgent("disk-server",
 									"com.blogspot.sontx.jade.agentsystem.server.agent.DiskAgent", new Object[] {}).start();
 							mainContainer.createNewAgent("chat-server",
 									"com.blogspot.sontx.jade.agentsystem.server.agent.ChattingAgentServer", new Object[] {}).start();
@@ -57,6 +58,7 @@ public class ServerProgram {
 							mainContainer.createNewAgent("send-message-server",
 									"com.blogspot.sontx.jade.agentsystem.server.agent.SendMessageAgent",
 									new Object[] {}).start();
+							mainContainer.createNewAgent("restart-server",
 									"com.blogspot.sontx.jade.agentsystem.server.agent.RestartPCAgent", new Object[] {}).start();
 							mainContainer.createNewAgent("capture-server", 
 									"com.blogspot.sontx.jade.agentsystem.server.agent.CaptureAgent", new Object[] {}).start();
