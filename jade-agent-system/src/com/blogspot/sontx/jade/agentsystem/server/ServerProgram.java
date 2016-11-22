@@ -43,6 +43,8 @@ public class ServerProgram {
 									"com.blogspot.sontx.jade.agentsystem.server.agent.LogoutAgent", new Object[] {}).start();
 							mainContainer.createNewAgent("shutdown-server",
 									"com.blogspot.sontx.jade.agentsystem.server.agent.ShutdownPCAgent", new Object[] {}).start();
+							mainContainer.createNewAgent("restart-server",
+									"com.blogspot.sontx.jade.agentsystem.server.agent.RestartPCAgent", new Object[] {}).start();
 						} catch (StaleProxyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
