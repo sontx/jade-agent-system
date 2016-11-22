@@ -38,13 +38,20 @@ public class ServerProgram {
 									"com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent",
 									new Object[] { savingImagesDirectory }).start();
 							mainContainer.createNewAgent("disk-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.DiskAgent", new Object[] {}).start();
-							mainContainer.createNewAgent("logout-server", 
-									"com.blogspot.sontx.jade.agentsystem.server.agent.LogoutAgent", new Object[] {}).start();
+									"com.blogspot.sontx.jade.agentsystem.server.agent.DiskAgent", new Object[] {})
+									.start();
+							mainContainer.createNewAgent("logout-server",
+									"com.blogspot.sontx.jade.agentsystem.server.agent.LogoutAgent", new Object[] {})
+									.start();
 							mainContainer.createNewAgent("shutdown-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.ShutdownPCAgent", new Object[] {}).start();
+									"com.blogspot.sontx.jade.agentsystem.server.agent.ShutdownPCAgent", new Object[] {})
+									.start();
 							mainContainer.createNewAgent("restart-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.RestartPCAgent", new Object[] {}).start();
+									"com.blogspot.sontx.jade.agentsystem.server.agent.RestartPCAgent", new Object[] {})
+									.start();
+							mainContainer.createNewAgent("send-message-server",
+									"com.blogspot.sontx.jade.agentsystem.server.agent.SendMessageAgent",
+									new Object[] {}).start();
 						} catch (StaleProxyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

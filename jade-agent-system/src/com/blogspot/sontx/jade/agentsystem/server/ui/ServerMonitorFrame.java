@@ -464,8 +464,7 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void sendMessage() {
-		// TODO Auto-generated method stub
-
+		serverAgent.sendMessage();
 	}
 
 	protected void controlAgent() {
