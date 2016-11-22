@@ -8,6 +8,7 @@ import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
 import jade.content.onto.OntologyException;
 import jade.content.onto.basic.Action;
+import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.AMSService;
 import jade.domain.FIPAAgentManagement.AMSAgentDescription;
@@ -65,5 +66,18 @@ public class ServerAgent extends Agent {
 	@Override
 	protected void takeDown() {
 		serverMonitorFrame.dispose();
+	}
+
+	private void sendInternalRequset(String who) {
+		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+		msg.addReceiver(new AID(who, AID.ISLOCALNAME));
+		msg.setLanguage("vietnamese");
+		msg.setOntology("well-well-well");
+		msg.setContent("do it for me");
+		send(msg);
+	}
+	
+	public void showDisk() {
+		sendInternalRequset("disk-server");
 	}
 }

@@ -39,5 +39,10 @@ public class DriveInformation {
 	public String getTypeDescription() {
 		return typeDescription;
 	}
+	
+	@Override
+	public String toString() {
+		return letter + " " + typeDescription;
+	}
 
 }
