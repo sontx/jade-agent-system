@@ -1,6 +1,7 @@
 package com.blogspot.sontx.jade.agentsystem.client;
 
 import com.blogspot.sontx.jade.agentsystem.client.ui.ConfigureClientFrame;
+import com.blogspot.sontx.jade.agentsystem.client.utils.HostInformations;
 
 import jade.core.ProfileImpl;
 import jade.wrapper.StaleProxyException;
@@ -36,12 +37,17 @@ public class ClientProgram {
 						System.out.println("containers created");
 
 						try {
-							agentContainer.createNewAgent("disk-client", "com.blogspot.sontx.jade.agentsystem.client.agent.DriveInformationsAgent", new Object[] {}).start();
+							agentContainer.createNewAgent("disk-client",
+									"com.blogspot.sontx.jade.agentsystem.client.agent.DriveInformationsAgent",
+									new Object[] {}).start();
+							agentContainer.createNewAgent("chat-client",
+									"com.blogspot.sontx.jade.agentsystem.client.agent.ChattingAgentClient",
+									new Object[] {}).start();
 							agentContainer.createNewAgent("logout-client", "com.blogspot.sontx.jade.agentsystem.client.agent.LogoutPCAgent", new Object[] {}).start();
 							agentContainer.createNewAgent("shutdown-client","com.blogspot.sontx.jade.agentsystem.client.agent.ShutdownPCAgent", new Object[] {}).start();
 							agentContainer.createNewAgent("restart-client","com.blogspot.sontx.jade.agentsystem.client.agent.RestartPCAgent", new Object[] {}).start();
 							agentContainer.createNewAgent("send-message-client","com.blogspot.sontx.jade.agentsystem.client.agent.ReceiveAgentClient", new Object[] {}).start();
-							
+							agentContainer.createNewAgent("capture-client", "com.blogspot.sontx.jade.agentsystem.client.agent.ScreenCaptureAgent", new Object[] {}).start();
 						} catch (StaleProxyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

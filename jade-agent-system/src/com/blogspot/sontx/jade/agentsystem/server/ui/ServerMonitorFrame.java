@@ -6,6 +6,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -17,11 +18,17 @@ import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.table.DefaultTableModel;
 
+import com.blogspot.sontx.jade.agentsystem.server.ServerProgram;
 import com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent;
 
 import jade.content.lang.Codec.CodecException;
 import jade.content.onto.OntologyException;
+import jade.core.Location;
 import jade.domain.FIPAAgentManagement.AMSAgentDescription;
+import jade.util.leap.Iterator;
+import jade.wrapper.AgentController;
+import jade.wrapper.ControllerException;
+import jade.wrapper.StaleProxyException;
 
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
@@ -46,6 +53,7 @@ public class ServerMonitorFrame extends JFrame {
 	private JLabel labWorkstationVersion;
 	private JLabel labConnectionServerIP;
 	private JLabel labConnectionServerPort;
+	private JList<Location> lstLocation;
 
 	public ServerMonitorFrame(ServerAgent serverAgent) {
 		this.serverAgent = serverAgent;
@@ -183,7 +191,7 @@ public class ServerMonitorFrame extends JFrame {
 		});
 		btnDisk.setBounds(234, 50, 102, 28);
 		panel.add(btnDisk);
-		
+
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -307,10 +315,6 @@ public class ServerMonitorFrame extends JFrame {
 		getContentPane().add(panel_3);
 		panel_3.setLayout(null);
 
-		JList list = new JList();
-		list.setBounds(10, 34, 235, 100);
-		panel_3.add(list);
-
 		JLabel lblPosition_1 = new JLabel("Position");
 		lblPosition_1.setBounds(10, 11, 46, 14);
 		panel_3.add(lblPosition_1);
@@ -332,6 +336,14 @@ public class ServerMonitorFrame extends JFrame {
 		});
 		btnUpdate.setBounds(255, 65, 89, 23);
 		panel_3.add(btnUpdate);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 31, 236, 103);
+		panel_3.add(scrollPane_1);
+
+		lstLocation = new JList<Location>();
+		lstLocation.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane_1.setViewportView(lstLocation);
 
 		JLabel lblConnectionInformation = new JLabel("Connection Information");
 		lblConnectionInformation.setBounds(10, 603, 205, 14);
@@ -375,33 +387,40 @@ public class ServerMonitorFrame extends JFrame {
 				focusTableRow();
 			}
 		});
-		
-		
+
 	}
-	
+
 	private void loadServerInformation() {
 		labConnectionServerIP.setText(System.getProperty("address"));
 		labConnectionServerPort.setText(System.getProperty("port"));
-		
+
 		try {
 			labWorkstationName.setText(InetAddress.getLocalHost().getHostName());
 		} catch (Exception e1) {
 			labWorkstationName.setText(System.getProperty("sun.desktop"));
 		}
-		
+
 		labWorkstationIP.setText(System.getProperty("address"));
 		labWorkstationOS.setText(System.getProperty("os.name"));
 		labWorkstationArchitecture.setText(System.getProperty("os.arch"));
 		labWorkstationVersion.setText(System.getProperty("os.version"));
 	}
 
+	private AMSAgentDescriptionModel getSelectedAgent() {
+		if (table.getSelectedRow() > -1)
+			return ((AMSAgentDescriptionModel) table.getValueAt(table.getSelectedRow(), 0));
+		return null;
+	}
+
 	protected void focusTableRow() {
-		AMSAgentDescriptionModel model =((AMSAgentDescriptionModel)table.getValueAt(table.getSelectedRow(), 0)); 
-		String agentName = model.desc.getName().getName();
-		labAgentId.setText(agentName);
-		labAgentName.setText(model.toString());
-		labAgentPosition.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
-		labAgentStatus.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		if (model != null) {
+			String agentName = model.desc.getName().getName();
+			labAgentId.setText(agentName);
+			labAgentName.setText(model.toString());
+			labAgentPosition.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+			labAgentStatus.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+		}
 	}
 
 	protected void refreshAgentsList() {
@@ -426,13 +445,25 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void updateAgentMovableList() {
-		// TODO Auto-generated method stub
-
+		serverAgent.updateMoveList();
 	}
 
 	protected void moveAgent() {
-		// TODO Auto-generated method stub
-
+		Location location = lstLocation.getSelectedValue();
+		if (location != null) {
+			AMSAgentDescriptionModel model = getSelectedAgent();
+			if (model != null) {
+				try {
+					AgentController agentController = ServerProgram.getMainContainer()
+							.getAgent(model.desc.getName().getLocalName());
+					agentController.move(location);
+					JOptionPane.showMessageDialog(this, "Moved " + agentController.getName() + " to " + location);
+				} catch (ControllerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	protected void showDisk() {
@@ -454,13 +485,11 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void captureScreen() {
-		// TODO Auto-generated method stub
-
+		serverAgent.captureScreen();
 	}
 
 	protected void chat() {
-		// TODO Auto-generated method stub
-
+		serverAgent.chat();
 	}
 
 	protected void sendMessage() {
@@ -468,18 +497,51 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void controlAgent() {
-		// TODO Auto-generated method stub
-
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		if (model != null) {
+			try {
+				AgentController agentController = ServerProgram.getMainContainer()
+						.getAgent(model.desc.getName().getLocalName());
+				AgentContrllerFrame agentContrllerFrame = new AgentContrllerFrame(agentController);
+				agentContrllerFrame.setVisible(true);
+			} catch (ControllerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected void deleteAgent() {
-		// TODO Auto-generated method stub
-
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		if (model != null) {
+			try {
+				AgentController agentController = ServerProgram.getMainContainer()
+						.getAgent(model.desc.getName().getLocalName());
+				String name = agentController.getName();
+				agentController.kill();
+				JOptionPane.showMessageDialog(this, "Deleted " + name);
+			} catch (ControllerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, e.getMessage());
+			}
+		}
 	}
 
 	protected void createAgent() {
-		// TODO Auto-generated method stub
-
+		try {
+			String name = JOptionPane.showInputDialog(this, "Enter agent name");
+			if (name != null && name.equals(name)) {
+				AgentController agentController = ServerProgram.getMainContainer().createNewAgent(name,
+						"com.blogspot.sontx.jade.agentsystem.server.agent.ExampleAgent", new Object[] {});
+				agentController.start();
+				JOptionPane.showMessageDialog(this, "Created " + agentController.getName());
+				refreshAgentsList();
+			}
+		} catch (StaleProxyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public JLabel getLabAgentId() {
@@ -565,5 +627,14 @@ public class ServerMonitorFrame extends JFrame {
 		public String toString() {
 			return desc.getName().getLocalName();
 		}
+	}
+
+	public void updateLocations(Iterator iterator) {
+		DefaultListModel<Location> listModel = new DefaultListModel<Location>();
+		while (iterator.hasNext()) {
+			Location location = (Location) iterator.next();
+			listModel.addElement(location);
+		}
+		lstLocation.setModel(listModel);
 	}
 }

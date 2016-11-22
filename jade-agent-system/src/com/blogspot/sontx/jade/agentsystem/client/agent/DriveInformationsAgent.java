@@ -32,7 +32,6 @@ public class DriveInformationsAgent extends Agent {
 			System.out.println("disk-client recieved message");
 			if (msg != null) {
 				ACLMessage msg1 = msg.createReply();
-
 				listInformation = DriveInformation.getAll();
 				StringBuilder builder = new StringBuilder();
 				for (DriveInformation driveInformation : listInformation) {
@@ -46,8 +45,6 @@ public class DriveInformationsAgent extends Agent {
 			} else {
 				block();
 			}
-
 		}
 	}
-
 }
