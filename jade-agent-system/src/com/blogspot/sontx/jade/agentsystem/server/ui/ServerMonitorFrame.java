@@ -347,16 +347,16 @@ public class ServerMonitorFrame extends JFrame {
 		labConnectionServerIP = new JLabel("192.168.1.x");
 		labConnectionServerIP.setBounds(75, 11, 121, 14);
 		panel_4.add(labConnectionServerIP);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 141, 437, 451);
 		getContentPane().add(scrollPane);
-		
-				table = new JTable();
-				table.setBorder(new LineBorder(new Color(0, 0, 0)));
-				scrollPane.setViewportView(table);
-				table.setShowHorizontalLines(false);
-				table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		table = new JTable();
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane.setViewportView(table);
+		table.setShowHorizontalLines(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	}
 
 	protected void shutdownServer() {
@@ -480,18 +480,25 @@ public class ServerMonitorFrame extends JFrame {
 	public JLabel getLabConnectionServerPort() {
 		return labConnectionServerPort;
 	}
+	
+	private String getIPAddressFromName(String name) {
+		int index1 = name.indexOf('@');
+		int index2 = name.indexOf(':');
+		return name.substring(index1 + 1, index2);
+	}
 
 	public void loadAgentsList(AMSAgentDescription[] descs) {
 		Object[][] data = new Object[descs.length][5];
 		for (int i = 0; i < descs.length; i++) {
 			AMSAgentDescription desc = descs[i];
 			String[] addresses = desc.getName().getAddressesArray();
+			String name = desc.getName().getName();
 			data[i][0] = desc.getName().getLocalName();
 			data[i][1] = desc.getState();
 			data[i][2] = addresses != null && addresses.length > 0 ? addresses[0] : "";
-			data[i][3] = "";
+			data[i][3] = getIPAddressFromName(name);
 			data[i][4] = "";
 		}
-		table.setModel(new DefaultTableModel(data, new String[] { "Name", "IP", "Position", "State", "Created" }));
+		table.setModel(new DefaultTableModel(data, new String[] { "Name", "Status", "Position", "IP", "Created" }));
 	}
 }
