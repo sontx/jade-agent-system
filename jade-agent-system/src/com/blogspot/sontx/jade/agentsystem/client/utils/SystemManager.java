@@ -36,7 +36,7 @@ public final class SystemManager {
 		}
 	}
 	
-	public void restart(){
+	public static void restart(){
 		try
 		{
 			 Runtime rt=Runtime.getRuntime();
