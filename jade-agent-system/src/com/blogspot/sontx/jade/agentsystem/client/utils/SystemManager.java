@@ -24,7 +24,7 @@ public final class SystemManager {
 		}).start();
 	}
 	
-	public void logout(){
+	public static void logout(){
 		try
 		{
 			 Runtime rt=Runtime.getRuntime();
