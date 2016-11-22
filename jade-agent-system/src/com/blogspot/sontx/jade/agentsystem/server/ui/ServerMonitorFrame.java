@@ -3,6 +3,7 @@ package com.blogspot.sontx.jade.agentsystem.server.ui;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -12,6 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.table.DefaultTableModel;
+
+import jade.domain.FIPAAgentManagement.AMSAgentDescription;
+
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -177,8 +181,6 @@ public class ServerMonitorFrame extends JFrame {
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setShowHorizontalLines(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Name", "IP", "Position", "State", "Created" }));
 		table.setBounds(10, 140, 437, 452);
 		getContentPane().add(table);
 
@@ -354,13 +356,13 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void shutdownServer() {
-		// TODO Auto-generated method stub
-		
+		if (JOptionPane.showConfirmDialog(this, "Do you want to shutdown server?") == JOptionPane.OK_OPTION) {
+			dispose();
+		}
 	}
 
 	protected void moveServer() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	protected void updateAgentMovableList() {
@@ -473,5 +475,19 @@ public class ServerMonitorFrame extends JFrame {
 
 	public JLabel getLabConnectionServerPort() {
 		return labConnectionServerPort;
+	}
+
+	public void loadAgentsList(AMSAgentDescription[] descs) {
+		Object[][] data = new Object[descs.length][5];
+		for (int i = 0; i < descs.length; i++) {
+			AMSAgentDescription desc = descs[i];
+			String[] addresses = desc.getName().getAddressesArray();
+			data[i][0] = desc.getName().getLocalName();
+			data[i][1] = desc.getState();
+			data[i][2] = addresses != null && addresses.length > 0 ? addresses[0] : "";
+			data[i][3] = "";
+			data[i][4] = "";
+		}
+		table.setModel(new DefaultTableModel(data, new String[] { "Name", "IP", "Position", "State", "Created" }));
 	}
 }

@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.blogspot.sontx.jade.agentsystem.server.Constants;
-import com.blogspot.sontx.jade.agentsystem.server.ServerMonitor;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -74,9 +73,7 @@ public class ConfigureServerFrame extends JFrame {
 	}
 	
 	private void updateServerConfigure(int port, String imagesDirectory) {
-		ServerMonitor.getInstance().setServerPort(port);
-		ServerMonitor.getInstance().setSavingImageDirectory(imagesDirectory);
-		ServerMonitor.getInstance().notifyConfigureChanged();
+		
 	}
 
 	protected void useDefaultConfigure() {

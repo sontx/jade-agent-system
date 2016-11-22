@@ -1,8 +1,10 @@
 package com.blogspot.sontx.jade.agentsystem.server;
 
-public class ServerProgram {
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+import jade.wrapper.StaleProxyException;
 
+public class ServerProgram {
+	public static void main(String[] args) throws StaleProxyException {
+		jade.Boot.main(new String[] { "-agents",
+				"sontx:com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent(somewhere)" });
 	}
 }
