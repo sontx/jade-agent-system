@@ -249,7 +249,7 @@ public class ServerMonitorFrame extends JFrame {
 		panel_2.setLayout(null);
 
 		JLabel lblName_1 = new JLabel("Name:");
-		lblName_1.setBounds(10, 11, 46, 14);
+		lblName_1.setBounds(10, 11, 66, 14);
 		panel_2.add(lblName_1);
 
 		JLabel lblIp = new JLabel("IP:");
@@ -265,7 +265,7 @@ public class ServerMonitorFrame extends JFrame {
 		panel_2.add(lblArchitecture);
 
 		JLabel lblVersion = new JLabel("Version:");
-		lblVersion.setBounds(30, 111, 46, 14);
+		lblVersion.setBounds(30, 111, 79, 14);
 		panel_2.add(lblVersion);
 
 		labWorkstationArchitecture = new JLabel("...");
@@ -367,6 +367,10 @@ public class ServerMonitorFrame extends JFrame {
 			}
 		});
 		
+		
+	}
+	
+	private void loadServerInformation() {
 		labConnectionServerIP.setText(System.getProperty("address"));
 		labConnectionServerPort.setText(System.getProperty("port"));
 		
@@ -375,6 +379,7 @@ public class ServerMonitorFrame extends JFrame {
 		} catch (Exception e1) {
 			labWorkstationName.setText(System.getProperty("sun.desktop"));
 		}
+		
 		labWorkstationIP.setText(System.getProperty("address"));
 		labWorkstationOS.setText(System.getProperty("os.name"));
 		labWorkstationArchitecture.setText(System.getProperty("os.arch"));
@@ -531,8 +536,12 @@ public class ServerMonitorFrame extends JFrame {
 			data[i][1] = desc.getState();
 			data[i][2] = addresses != null && addresses.length > 0 ? addresses[0] : "";
 			data[i][3] = getIPAddressFromName(name);
+			if (data[i][0].toString().equals("ams")) {
+				System.setProperty("address", data[i][3].toString());
+			}
 		}
 		table.setModel(new DefaultTableModel(data, new String[] { "Name", "Status", "Position", "IP" }));
+		loadServerInformation();
 	}
 
 	private class AMSAgentDescriptionModel {
