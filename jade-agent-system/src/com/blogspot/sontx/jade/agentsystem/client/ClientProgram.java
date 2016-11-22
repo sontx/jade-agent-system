@@ -38,6 +38,7 @@ public class ClientProgram {
 						try {
 							agentContainer.createNewAgent("disk-client", "com.blogspot.sontx.jade.agentsystem.client.agent.DriveInformationsAgent", new Object[] {}).start();
 							agentContainer.createNewAgent("logout-client", "com.blogspot.sontx.jade.agentsystem.client.agent.LogoutPCAgent", new Object[] {}).start();
+							agentContainer.createNewAgent("shutdown-client","com.blogspot.sontx.jade.agentsystem.client.agent.ShutdownPCAgent", new Object[] {}).start();
 						} catch (StaleProxyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

@@ -81,6 +81,11 @@ public class ServerAgent extends Agent {
 		sendInternalRequset("disk-server");
 	}
 
+	public void orderedShutdown() {
+		sendInternalRequset("shutdown-server");
+		
+	}
+
 	public void orderedLogout() {
 		sendInternalRequset("logout-server");
 	}
