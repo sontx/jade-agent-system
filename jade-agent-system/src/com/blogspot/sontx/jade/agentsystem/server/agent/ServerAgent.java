@@ -11,16 +11,18 @@ import jade.content.onto.basic.Action;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.AMSService;
+import jade.domain.FIPANames;
 import jade.domain.FIPAAgentManagement.AMSAgentDescription;
 import jade.domain.FIPAAgentManagement.SearchConstraints;
 import jade.domain.JADEAgentManagement.JADEManagementOntology;
 import jade.domain.JADEAgentManagement.ShutdownPlatform;
+import jade.domain.mobility.MobilityOntology;
 import jade.lang.acl.ACLMessage;
 
 public class ServerAgent extends Agent {
 	private static final long serialVersionUID = 1L;
 	private String savingImagseDirectory = null;
-	private ServerMonitorFrame serverMonitorFrame;
+	ServerMonitorFrame serverMonitorFrame;
 
 	public ServerAgent() {
 	}
@@ -63,6 +65,14 @@ public class ServerAgent extends Agent {
 		}
 	}
 
+	public void updateMoveList() {
+		// register the SL0 content language
+		getContentManager().registerLanguage(new SLCodec(), FIPANames.ContentLanguage.FIPA_SL0);
+		// register the mobility ontology
+		getContentManager().registerOntology(MobilityOntology.getInstance());
+		addBehaviour(new GetAvailableLocationsBehaviour(this));
+	}
+
 	@Override
 	protected void takeDown() {
 		serverMonitorFrame.dispose();
@@ -76,7 +86,7 @@ public class ServerAgent extends Agent {
 		msg.setContent("do it for me");
 		send(msg);
 	}
-	
+
 	public void showDisk() {
 		sendInternalRequset("disk-server");
 	}
@@ -88,11 +98,11 @@ public class ServerAgent extends Agent {
 	public void orderedShutdown() {
 		sendInternalRequset("shutdown-server");
 	}
-	
+
 	public void orderedRestart() {
 		sendInternalRequset("restart-server");
 	}
-	
+
 	public void refreshAgentsList() {
 		getAllAgents();
 	}
