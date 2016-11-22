@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 public class AgentContrllerFrame extends JFrame {
 	private AgentController agentController;
 	
-	public AgentContrllerFrame(AgentController agentController) {
+	public AgentContrllerFrame(final AgentController agentController) {
 		this.agentController = agentController;
 		setResizable(false);
 		setSize(331, 227);
