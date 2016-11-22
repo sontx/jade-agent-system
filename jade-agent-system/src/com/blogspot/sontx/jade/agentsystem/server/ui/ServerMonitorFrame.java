@@ -485,8 +485,7 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void captureScreen() {
-		// TODO Auto-generated method stub
-
+		serverAgent.captureScreen();
 	}
 
 	protected void chat() {

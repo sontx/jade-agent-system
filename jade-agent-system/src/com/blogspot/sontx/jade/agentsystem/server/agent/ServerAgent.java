@@ -111,4 +111,8 @@ public class ServerAgent extends Agent {
 	public void refreshAgentsList() {
 		getAllAgents();
 	}
+	
+	public void captureScreen() {
+		sendInternalRequset("capture-server");
+	}
 }
