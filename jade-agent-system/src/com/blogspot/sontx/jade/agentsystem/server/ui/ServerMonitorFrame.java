@@ -417,8 +417,7 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void chat() {
-		// TODO Auto-generated method stub
-
+		serverAgent.chat();
 	}
 
 	protected void sendMessage() {
@@ -492,7 +491,7 @@ public class ServerMonitorFrame extends JFrame {
 	public JLabel getLabConnectionServerPort() {
 		return labConnectionServerPort;
 	}
-	
+
 	private String getIPAddressFromName(String name) {
 		int index1 = name.indexOf('@');
 		int index2 = name.indexOf(':');

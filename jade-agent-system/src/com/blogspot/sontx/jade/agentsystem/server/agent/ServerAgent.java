@@ -76,8 +76,12 @@ public class ServerAgent extends Agent {
 		msg.setContent("do it for me");
 		send(msg);
 	}
-	
+
 	public void showDisk() {
 		sendInternalRequset("disk-server");
+	}
+
+	public void chat() {
+		sendInternalRequset("chat-server");
 	}
 }
