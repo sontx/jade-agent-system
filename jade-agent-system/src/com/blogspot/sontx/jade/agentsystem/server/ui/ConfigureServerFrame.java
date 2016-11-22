@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import com.blogspot.sontx.jade.agentsystem.server.Constants;
 import com.blogspot.sontx.jade.agentsystem.server.ServerMonitor;
 
 import java.awt.event.ActionListener;
@@ -79,8 +80,8 @@ public class ConfigureServerFrame extends JFrame {
 	}
 
 	protected void useDefaultConfigure() {
-		String imagesDirectory  = System.getProperty("user.home");
-		int port = 3393;
+		String imagesDirectory  = Constants.CONFIG_DEFAULT_SAVING_IMAGES_DIR;
+		int port = Constants.CONFIG_DEFAULT_SERVER_PORT;
 		updateServerConfigure(port, imagesDirectory);
 	}
 
