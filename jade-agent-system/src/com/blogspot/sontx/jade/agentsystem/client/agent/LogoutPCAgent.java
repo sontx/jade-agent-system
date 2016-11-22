@@ -1,10 +1,9 @@
 package com.blogspot.sontx.jade.agentsystem.client.agent;
 
-import com.blogspot.sontx.jade.agentsystem.client.utils.DriveInformation;
 import com.blogspot.sontx.jade.agentsystem.client.utils.SystemManager;
 
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
 public class LogoutPCAgent extends Agent {
@@ -14,7 +13,7 @@ public class LogoutPCAgent extends Agent {
 		addBehaviour(new LogoutPC());
 	}
 	
-	private class LogoutPC extends OneShotBehaviour {
+	private class LogoutPC extends CyclicBehaviour {
 
 		@Override
 		public void action() {

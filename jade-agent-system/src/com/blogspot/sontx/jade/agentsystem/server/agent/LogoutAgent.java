@@ -4,7 +4,7 @@ import com.blogspot.sontx.jade.agentsystem.client.utils.SystemManager;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.OneShotBehaviour;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
 public class LogoutAgent extends Agent {
@@ -13,7 +13,7 @@ public class LogoutAgent extends Agent {
 		addBehaviour(new LogoutPC());
 	}
 	
-	private class LogoutPC extends OneShotBehaviour {
+	private class LogoutPC extends CyclicBehaviour {
 
 		@Override
 		public void action() {
