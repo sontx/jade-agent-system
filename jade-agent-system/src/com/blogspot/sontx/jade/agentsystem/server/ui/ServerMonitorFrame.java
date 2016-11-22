@@ -8,6 +8,9 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -22,6 +25,8 @@ import jade.domain.FIPAAgentManagement.AMSAgentDescription;
 
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
@@ -33,7 +38,6 @@ public class ServerMonitorFrame extends JFrame {
 	private JLabel labAgentName;
 	private JLabel labAgentPosition;
 	private JLabel labAgentServerMonitor;
-	private JLabel labAgentCreatedTime;
 	private JLabel labAgentStatus;
 	private JLabel labWorkstationName;
 	private JLabel labWorkstationIP;
@@ -199,47 +203,39 @@ public class ServerMonitorFrame extends JFrame {
 		panel_1.add(lblId);
 
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(10, 36, 46, 14);
+		lblName.setBounds(10, 36, 75, 14);
 		panel_1.add(lblName);
 
 		JLabel lblPosition = new JLabel("Position:");
-		lblPosition.setBounds(10, 61, 46, 14);
+		lblPosition.setBounds(10, 61, 75, 14);
 		panel_1.add(lblPosition);
 
 		JLabel lblServerMonitor = new JLabel("Server Monitor:");
 		lblServerMonitor.setBounds(10, 86, 75, 14);
 		panel_1.add(lblServerMonitor);
 
-		JLabel lblCreatedTime = new JLabel("Created Time:");
-		lblCreatedTime.setBounds(10, 111, 75, 14);
-		panel_1.add(lblCreatedTime);
-
 		JLabel lblStatus = new JLabel("Status:");
-		lblStatus.setBounds(10, 136, 46, 14);
+		lblStatus.setBounds(10, 111, 46, 14);
 		panel_1.add(lblStatus);
 
-		labAgentServerMonitor = new JLabel("...");
-		labAgentServerMonitor.setBounds(93, 86, 248, 14);
+		labAgentServerMonitor = new JLabel("Server Monitor");
+		labAgentServerMonitor.setBounds(114, 86, 227, 14);
 		panel_1.add(labAgentServerMonitor);
 
-		labAgentCreatedTime = new JLabel("...");
-		labAgentCreatedTime.setBounds(93, 111, 248, 14);
-		panel_1.add(labAgentCreatedTime);
-
 		labAgentStatus = new JLabel("...");
-		labAgentStatus.setBounds(93, 136, 248, 14);
+		labAgentStatus.setBounds(114, 111, 227, 14);
 		panel_1.add(labAgentStatus);
 
 		labAgentPosition = new JLabel("...");
-		labAgentPosition.setBounds(93, 61, 248, 14);
+		labAgentPosition.setBounds(114, 61, 227, 14);
 		panel_1.add(labAgentPosition);
 
 		labAgentName = new JLabel("...");
-		labAgentName.setBounds(93, 36, 248, 14);
+		labAgentName.setBounds(114, 36, 227, 14);
 		panel_1.add(labAgentName);
 
 		labAgentId = new JLabel("...");
-		labAgentId.setBounds(93, 11, 248, 14);
+		labAgentId.setBounds(114, 11, 227, 14);
 		panel_1.add(labAgentId);
 
 		JLabel lblWorkstation = new JLabel("Workstation Information");
@@ -273,23 +269,23 @@ public class ServerMonitorFrame extends JFrame {
 		panel_2.add(lblVersion);
 
 		labWorkstationArchitecture = new JLabel("...");
-		labWorkstationArchitecture.setBounds(96, 86, 248, 14);
+		labWorkstationArchitecture.setBounds(126, 86, 218, 14);
 		panel_2.add(labWorkstationArchitecture);
 
 		labWorkstationVersion = new JLabel("...");
-		labWorkstationVersion.setBounds(96, 111, 248, 14);
+		labWorkstationVersion.setBounds(126, 111, 218, 14);
 		panel_2.add(labWorkstationVersion);
 
 		labWorkstationOS = new JLabel("...");
-		labWorkstationOS.setBounds(96, 61, 248, 14);
+		labWorkstationOS.setBounds(126, 61, 218, 14);
 		panel_2.add(labWorkstationOS);
 
 		labWorkstationIP = new JLabel("...");
-		labWorkstationIP.setBounds(96, 36, 248, 14);
+		labWorkstationIP.setBounds(126, 36, 218, 14);
 		panel_2.add(labWorkstationIP);
 
 		labWorkstationName = new JLabel("...");
-		labWorkstationName.setBounds(96, 11, 248, 14);
+		labWorkstationName.setBounds(126, 11, 218, 14);
 		panel_2.add(labWorkstationName);
 
 		JLabel lblMoveAgent = new JLabel("Move Agent");
@@ -363,6 +359,35 @@ public class ServerMonitorFrame extends JFrame {
 		scrollPane.setViewportView(table);
 		table.setShowHorizontalLines(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				focusTableRow();
+			}
+		});
+		
+		labConnectionServerIP.setText(System.getProperty("address"));
+		labConnectionServerPort.setText(System.getProperty("port"));
+		
+		try {
+			labWorkstationName.setText(InetAddress.getLocalHost().getHostName());
+		} catch (Exception e1) {
+			labWorkstationName.setText(System.getProperty("sun.desktop"));
+		}
+		labWorkstationIP.setText(System.getProperty("address"));
+		labWorkstationOS.setText(System.getProperty("os.name"));
+		labWorkstationArchitecture.setText(System.getProperty("os.arch"));
+		labWorkstationVersion.setText(System.getProperty("os.version"));
+	}
+
+	protected void focusTableRow() {
+		AMSAgentDescriptionModel model =((AMSAgentDescriptionModel)table.getValueAt(table.getSelectedRow(), 0)); 
+		String agentName = model.desc.getName().getName();
+		labAgentId.setText(agentName);
+		labAgentName.setText(model.toString());
+		labAgentPosition.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+		labAgentStatus.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
 	}
 
 	protected void shutdownServer() {
@@ -458,10 +483,6 @@ public class ServerMonitorFrame extends JFrame {
 		return labAgentServerMonitor;
 	}
 
-	public JLabel getLabAgentCreatedTime() {
-		return labAgentCreatedTime;
-	}
-
 	public JLabel getLabAgentStatus() {
 		return labAgentStatus;
 	}
@@ -493,7 +514,7 @@ public class ServerMonitorFrame extends JFrame {
 	public JLabel getLabConnectionServerPort() {
 		return labConnectionServerPort;
 	}
-	
+
 	private String getIPAddressFromName(String name) {
 		int index1 = name.indexOf('@');
 		int index2 = name.indexOf(':');
@@ -501,17 +522,29 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	public void loadAgentsList(AMSAgentDescription[] descs) {
-		Object[][] data = new Object[descs.length][5];
+		Object[][] data = new Object[descs.length][4];
 		for (int i = 0; i < descs.length; i++) {
 			AMSAgentDescription desc = descs[i];
 			String[] addresses = desc.getName().getAddressesArray();
 			String name = desc.getName().getName();
-			data[i][0] = desc.getName().getLocalName();
+			data[i][0] = new AMSAgentDescriptionModel(desc);
 			data[i][1] = desc.getState();
 			data[i][2] = addresses != null && addresses.length > 0 ? addresses[0] : "";
 			data[i][3] = getIPAddressFromName(name);
-			data[i][4] = "";
 		}
-		table.setModel(new DefaultTableModel(data, new String[] { "Name", "Status", "Position", "IP", "Created" }));
+		table.setModel(new DefaultTableModel(data, new String[] { "Name", "Status", "Position", "IP" }));
+	}
+
+	private class AMSAgentDescriptionModel {
+		private AMSAgentDescription desc;
+
+		public AMSAgentDescriptionModel(AMSAgentDescription desc) {
+			this.desc = desc;
+		}
+
+		@Override
+		public String toString() {
+			return desc.getName().getLocalName();
+		}
 	}
 }
