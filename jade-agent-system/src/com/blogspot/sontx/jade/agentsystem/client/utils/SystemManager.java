@@ -6,7 +6,7 @@ public final class SystemManager {
 	private SystemManager() {
 	}
 
-	public void shutdown() {
+	public static void shutdown() {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
