@@ -1,4 +1,4 @@
-package com.blogspot.sontx.jade.agentsystem.client.utils;
+package com.blogspot.sontx.jade.agentsystem.client;
 
 import java.awt.AWTException;
 import java.awt.Rectangle;
