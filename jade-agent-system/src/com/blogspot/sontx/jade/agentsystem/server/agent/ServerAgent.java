@@ -84,13 +84,16 @@ public class ServerAgent extends Agent {
 	public void orderedLogout() {
 		sendInternalRequset("logout-server");
 	}
-	
+
 	public void orderedShutdown() {
 		sendInternalRequset("shutdown-server");
 	}
-
+	
 	public void orderedRestart() {
 		sendInternalRequset("restart-server");
-		
+	}
+	
+	public void refreshAgentsList() {
+		getAllAgents();
 	}
 }
