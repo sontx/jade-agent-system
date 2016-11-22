@@ -179,6 +179,15 @@ public class ServerMonitorFrame extends JFrame {
 		});
 		btnDisk.setBounds(234, 50, 102, 28);
 		panel.add(btnDisk);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refreshAgentsList();
+			}
+		});
+		btnRefresh.setBounds(346, 50, 102, 28);
+		panel.add(btnRefresh);
 
 		JLabel lblNewLabel = new JLabel("Agents List");
 		lblNewLabel.setBounds(10, 115, 86, 14);
@@ -363,6 +372,10 @@ public class ServerMonitorFrame extends JFrame {
 		scrollPane.setViewportView(table);
 		table.setShowHorizontalLines(false);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	}
+
+	protected void refreshAgentsList() {
+		serverAgent.refreshAgentsList();
 	}
 
 	protected void shutdownServer() {
