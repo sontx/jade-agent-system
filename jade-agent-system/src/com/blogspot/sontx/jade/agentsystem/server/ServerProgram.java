@@ -8,6 +8,12 @@ import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 
 public class ServerProgram {
+	private static jade.wrapper.AgentContainer mainContainer;
+	
+	public static jade.wrapper.AgentContainer getMainContainer() {
+		return mainContainer;
+	}
+	
 	public static void main(String[] args) throws StaleProxyException {
 		ConfigureServerFrame configureServerFrame = new ConfigureServerFrame();
 		configureServerFrame
@@ -28,7 +34,7 @@ public class ServerProgram {
 						System.out.print("profile created\n");
 
 						System.out.println("Launching a whole in-process platform..." + profile);
-						jade.wrapper.AgentContainer mainContainer = rt.createMainContainer(profile);
+						mainContainer = rt.createMainContainer(profile);
 
 						AgentController rma;
 						try {
