@@ -514,8 +514,20 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void deleteAgent() {
-		// TODO Auto-generated method stub
-
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		if (model != null) {
+			try {
+				AgentController agentController = ServerProgram.getMainContainer()
+						.getAgent(model.desc.getName().getLocalName());
+				String name = agentController.getName();
+				agentController.kill();
+				JOptionPane.showMessageDialog(this, "Deleted " + name);
+			} catch (ControllerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, e.getMessage());
+			}
+		}
 	}
 
 	protected void createAgent() {
