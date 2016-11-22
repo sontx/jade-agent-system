@@ -17,11 +17,14 @@ import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.table.DefaultTableModel;
 
+import com.blogspot.sontx.jade.agentsystem.server.ServerProgram;
 import com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent;
 
 import jade.content.lang.Codec.CodecException;
 import jade.content.onto.OntologyException;
 import jade.domain.FIPAAgentManagement.AMSAgentDescription;
+import jade.wrapper.AgentController;
+import jade.wrapper.ControllerException;
 
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
@@ -183,7 +186,7 @@ public class ServerMonitorFrame extends JFrame {
 		});
 		btnDisk.setBounds(234, 50, 102, 28);
 		panel.add(btnDisk);
-		
+
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -375,33 +378,40 @@ public class ServerMonitorFrame extends JFrame {
 				focusTableRow();
 			}
 		});
-		
-		
+
 	}
-	
+
 	private void loadServerInformation() {
 		labConnectionServerIP.setText(System.getProperty("address"));
 		labConnectionServerPort.setText(System.getProperty("port"));
-		
+
 		try {
 			labWorkstationName.setText(InetAddress.getLocalHost().getHostName());
 		} catch (Exception e1) {
 			labWorkstationName.setText(System.getProperty("sun.desktop"));
 		}
-		
+
 		labWorkstationIP.setText(System.getProperty("address"));
 		labWorkstationOS.setText(System.getProperty("os.name"));
 		labWorkstationArchitecture.setText(System.getProperty("os.arch"));
 		labWorkstationVersion.setText(System.getProperty("os.version"));
 	}
 
+	private AMSAgentDescriptionModel getSelectedAgent() {
+		if (table.getSelectedRow() > -1)
+			return ((AMSAgentDescriptionModel) table.getValueAt(table.getSelectedRow(), 0));
+		return null;
+	}
+
 	protected void focusTableRow() {
-		AMSAgentDescriptionModel model =((AMSAgentDescriptionModel)table.getValueAt(table.getSelectedRow(), 0)); 
-		String agentName = model.desc.getName().getName();
-		labAgentId.setText(agentName);
-		labAgentName.setText(model.toString());
-		labAgentPosition.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
-		labAgentStatus.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		if (model != null) {
+			String agentName = model.desc.getName().getName();
+			labAgentId.setText(agentName);
+			labAgentName.setText(model.toString());
+			labAgentPosition.setText(table.getValueAt(table.getSelectedRow(), 2).toString());
+			labAgentStatus.setText(table.getValueAt(table.getSelectedRow(), 1).toString());
+		}
 	}
 
 	protected void refreshAgentsList() {
@@ -469,8 +479,17 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void controlAgent() {
-		// TODO Auto-generated method stub
-
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		if (model != null) {
+			try {
+				AgentController agentController = ServerProgram.getMainContainer().getAgent(model.desc.getName().getLocalName());
+				AgentContrllerFrame agentContrllerFrame = new AgentContrllerFrame(agentController);
+				agentContrllerFrame.setVisible(true);
+			} catch (ControllerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected void deleteAgent() {
