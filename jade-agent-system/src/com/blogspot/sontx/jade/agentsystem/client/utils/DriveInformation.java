@@ -1,4 +1,4 @@
-package com.blogspot.sontx.jade.agentsystem.client;
+package com.blogspot.sontx.jade.agentsystem.client.utils;
 
 import java.io.File;
 import java.util.ArrayList;
