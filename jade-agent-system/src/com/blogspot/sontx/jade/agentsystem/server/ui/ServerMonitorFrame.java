@@ -449,8 +449,21 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void moveAgent() {
-		// TODO Auto-generated method stub
-
+		Location location = lstLocation.getSelectedValue();
+		if (location != null) {
+			AMSAgentDescriptionModel model = getSelectedAgent();
+			if (model != null) {
+				try {
+					AgentController agentController = ServerProgram.getMainContainer()
+							.getAgent(model.desc.getName().getLocalName());
+					agentController.move(location);
+					JOptionPane.showMessageDialog(this, "Moved " + agentController.getName() + " to " + location);
+				} catch (ControllerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	protected void showDisk() {
