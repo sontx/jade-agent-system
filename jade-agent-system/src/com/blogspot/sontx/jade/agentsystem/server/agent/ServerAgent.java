@@ -91,6 +91,11 @@ public class ServerAgent extends Agent {
 		sendInternalRequset("disk-server");
 	}
 
+
+	public void chat() {
+		sendInternalRequset("chat-server");
+	}
+	
 	public void orderedLogout() {
 		sendInternalRequset("logout-server");
 	}

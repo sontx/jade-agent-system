@@ -44,7 +44,8 @@ public class ServerProgram {
 									"com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent",
 									new Object[] { savingImagesDirectory }).start();
 							mainContainer.createNewAgent("disk-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.DiskAgent", new Object[] {}).start();
+							mainContainer.createNewAgent("chat-server",
+									"com.blogspot.sontx.jade.agentsystem.server.agent.ChattingAgentServer", new Object[] {}).start();
 							mainContainer.createNewAgent("logout-server", 
 									"com.blogspot.sontx.jade.agentsystem.server.agent.LogoutAgent", new Object[] {}).start();
 							mainContainer.createNewAgent("shutdown-server",

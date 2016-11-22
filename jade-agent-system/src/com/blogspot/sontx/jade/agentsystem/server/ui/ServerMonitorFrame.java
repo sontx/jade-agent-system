@@ -490,8 +490,7 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void chat() {
-		// TODO Auto-generated method stub
-
+		serverAgent.chat();
 	}
 
 	protected void sendMessage() {
