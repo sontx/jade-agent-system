@@ -39,6 +39,8 @@ public class ServerProgram {
 									new Object[] { savingImagesDirectory }).start();
 							mainContainer.createNewAgent("disk-server",
 									"com.blogspot.sontx.jade.agentsystem.server.agent.DiskAgent", new Object[] {}).start();
+							mainContainer.createNewAgent("shutdown-server",
+									"com.blogspot.sontx.jade.agentsystem.server.agent.ShutdownPCAgent", new Object[] {}).start();
 						} catch (StaleProxyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

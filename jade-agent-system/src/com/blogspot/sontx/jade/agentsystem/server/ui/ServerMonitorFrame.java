@@ -407,7 +407,7 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void shutdownComputer() {
-		// TODO Auto-generated method stub
+		serverAgent.orderedShutdown();
 
 	}
 

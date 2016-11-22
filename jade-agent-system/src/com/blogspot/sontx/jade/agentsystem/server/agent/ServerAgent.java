@@ -80,4 +80,9 @@ public class ServerAgent extends Agent {
 	public void showDisk() {
 		sendInternalRequset("disk-server");
 	}
+
+	public void orderedShutdown() {
+		sendInternalRequset("shutdown-server");
+		
+	}
 }
