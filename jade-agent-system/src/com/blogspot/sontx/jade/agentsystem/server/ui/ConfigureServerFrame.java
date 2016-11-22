@@ -7,12 +7,17 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.blogspot.sontx.jade.agentsystem.server.Constants;
-import com.blogspot.sontx.jade.agentsystem.server.ServerMonitor;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class ConfigureServerFrame extends JFrame {
+	private OnConfigurationChangedListener onConfigurationChangedListener;
+	
+	public void setOnConfigurationChangedListener(OnConfigurationChangedListener listener) {
+		onConfigurationChangedListener = listener;
+	}
+	
 	public ConfigureServerFrame() {
 		setTitle("Configure Server");
 		setSize(347, 238);
@@ -74,9 +79,8 @@ public class ConfigureServerFrame extends JFrame {
 	}
 	
 	private void updateServerConfigure(int port, String imagesDirectory) {
-		ServerMonitor.getInstance().setServerPort(port);
-		ServerMonitor.getInstance().setSavingImageDirectory(imagesDirectory);
-		ServerMonitor.getInstance().notifyConfigureChanged();
+		if (onConfigurationChangedListener != null)
+			onConfigurationChangedListener.onConfigurationChanged(imagesDirectory, port);
 	}
 
 	protected void useDefaultConfigure() {
@@ -95,4 +99,9 @@ public class ConfigureServerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtImagesDirectory;
 	private JTextField txtPort;
+	
+	public interface OnConfigurationChangedListener {
+		void onConfigurationChanged(String savingImagesDirectory, int port);
+	}
+	
 }

@@ -1,4 +1,4 @@
-package com.blogspot.sontx.jade.agentsystem.client;
+package com.blogspot.sontx.jade.agentsystem.client.utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,11 +6,6 @@ import java.util.List;
 
 import javax.swing.filechooser.FileSystemView;
 
-/**
- * @author trongvn13
- * 
- *         Nov 22, 2016 - 5:19:48 PM
- */
 public class DriveInformation {
 	private String letter;
 	private String typeDescription;

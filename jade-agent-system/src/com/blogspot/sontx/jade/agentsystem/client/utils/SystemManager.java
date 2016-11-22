@@ -6,7 +6,7 @@ public final class SystemManager {
 	private SystemManager() {
 	}
 
-	public void shutdown() {
+	public static void shutdown() {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -24,7 +24,7 @@ public final class SystemManager {
 		}).start();
 	}
 	
-	public void logout(){
+	public static void logout(){
 		try
 		{
 			 Runtime rt=Runtime.getRuntime();
@@ -36,7 +36,7 @@ public final class SystemManager {
 		}
 	}
 	
-	public void restart(){
+	public static void restart(){
 		try
 		{
 			 Runtime rt=Runtime.getRuntime();
