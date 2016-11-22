@@ -1,15 +1,15 @@
-package com.blogspot.sontx.jade.agentsystem.client.agent;
+package com.blogspot.sontx.jade.agentsystem.server.agent;
 
 import com.blogspot.sontx.jade.agentsystem.client.utils.SystemManager;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class LogoutPCAgent extends Agent {
+public class LogoutAgent extends Agent {
 	@Override
 	protected void setup() {
-		System.out.println(String.format("Hello! LogoutPCAgent %s is ready.", getAID().getName()));
 		addBehaviour(new LogoutPC());
 	}
 	
@@ -18,9 +18,14 @@ public class LogoutPCAgent extends Agent {
 		@Override
 		public void action() {
 			ACLMessage msg = myAgent.receive();
-			System.out.println("logout-client recieved message");
 			if (msg != null) {
-				SystemManager.logout();
+				if (msg.getPerformative() == ACLMessage.INFORM) {
+					ACLMessage msg1 = new ACLMessage(ACLMessage.REQUEST);
+					msg1.addReceiver(new AID("logout-client", AID.ISLOCALNAME));
+					send(msg1);
+					System.out.println("logout-server sent request");
+				} else {
+				}
 			} else {
 				block();
 			}

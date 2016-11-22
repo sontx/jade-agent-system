@@ -81,6 +81,9 @@ public class ConfigureServerFrame extends JFrame {
 	private void updateServerConfigure(int port, String imagesDirectory) {
 		if (onConfigurationChangedListener != null)
 			onConfigurationChangedListener.onConfigurationChanged(imagesDirectory, port);
+		System.setProperty("port", port + "");
+		System.setProperty("imgdir", imagesDirectory);
+		dispose();
 	}
 
 	protected void useDefaultConfigure() {

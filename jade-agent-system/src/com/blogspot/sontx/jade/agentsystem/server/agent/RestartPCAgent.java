@@ -1,6 +1,4 @@
-package com.blogspot.sontx.jade.agentsystem.client.agent;
-
-import com.blogspot.sontx.jade.agentsystem.client.utils.SystemManager;
+package com.blogspot.sontx.jade.agentsystem.server.agent;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -17,11 +15,17 @@ public class RestartPCAgent extends Agent {
 		@Override
 		public void action() {
 			ACLMessage msg = myAgent.receive();
-			if(msg!= null){
-				SystemManager.restart();;
-			}else{
+			if (msg != null) {
+				if (msg.getPerformative() == ACLMessage.INFORM) {
+					ACLMessage msg1 = new ACLMessage(ACLMessage.REQUEST);
+					msg1.addReceiver(new AID("restart-client", AID.ISLOCALNAME));
+					send(msg1);
+					System.out.println("restart-server sent request");
+				} else {
+				}
+			} else {
 				block();
-			}
+			}	
 		}
 	}
 }

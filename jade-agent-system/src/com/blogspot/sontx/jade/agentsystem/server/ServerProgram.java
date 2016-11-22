@@ -8,6 +8,12 @@ import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 
 public class ServerProgram {
+	private static jade.wrapper.AgentContainer mainContainer;
+	
+	public static jade.wrapper.AgentContainer getMainContainer() {
+		return mainContainer;
+	}
+	
 	public static void main(String[] args) throws StaleProxyException {
 		ConfigureServerFrame configureServerFrame = new ConfigureServerFrame();
 		configureServerFrame
@@ -28,7 +34,7 @@ public class ServerProgram {
 						System.out.print("profile created\n");
 
 						System.out.println("Launching a whole in-process platform..." + profile);
-						jade.wrapper.AgentContainer mainContainer = rt.createMainContainer(profile);
+						mainContainer = rt.createMainContainer(profile);
 
 						AgentController rma;
 						try {
@@ -38,10 +44,14 @@ public class ServerProgram {
 									"com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent",
 									new Object[] { savingImagesDirectory }).start();
 							mainContainer.createNewAgent("disk-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.DiskAgent", new Object[] {}).start();
-							
 							mainContainer.createNewAgent("chat-server",
 									"com.blogspot.sontx.jade.agentsystem.server.agent.ChattingAgentServer", new Object[] {}).start();
+							mainContainer.createNewAgent("logout-server", 
+									"com.blogspot.sontx.jade.agentsystem.server.agent.LogoutAgent", new Object[] {}).start();
+							mainContainer.createNewAgent("shutdown-server",
+									"com.blogspot.sontx.jade.agentsystem.server.agent.ShutdownPCAgent", new Object[] {}).start();
+							mainContainer.createNewAgent("restart-server",
+									"com.blogspot.sontx.jade.agentsystem.server.agent.RestartPCAgent", new Object[] {}).start();
 						} catch (StaleProxyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
