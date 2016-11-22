@@ -1,4 +1,4 @@
-package com.blogspot.sontx.jade.agentsystem.client.utils;
+package com.blogspot.sontx.jade.agentsystem.client;
 
 import com.blogspot.sontx.jade.agentsystem.client.ui.ConfigureClientFrame;
 
