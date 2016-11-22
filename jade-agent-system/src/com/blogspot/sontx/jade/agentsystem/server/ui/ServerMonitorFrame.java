@@ -1,0 +1,277 @@
+package com.blogspot.sontx.jade.agentsystem.server.ui;
+
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.JToolBar;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.ListSelectionModel;
+
+public class ServerMonitorFrame extends JFrame {
+	public ServerMonitorFrame() {
+		setResizable(false);
+		setTitle("Server Monitor: Agent Management System");
+		setSize(834, 773);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnManageServer = new JMenu("Manage Server");
+		menuBar.add(mnManageServer);
+		
+		JMenuItem mntmMoveServer = new JMenuItem("Move Server...");
+		mnManageServer.add(mntmMoveServer);
+		
+		JMenuItem mntmShutdownServer = new JMenuItem("Shutdown Server");
+		mnManageServer.add(mntmShutdownServer);
+		
+		JMenu mnGeneralControl = new JMenu("General Control");
+		menuBar.add(mnGeneralControl);
+		
+		JMenu mnInfo = new JMenu("Information");
+		menuBar.add(mnInfo);
+		
+		JMenuItem mntmAbout = new JMenuItem("About...");
+		mnInfo.add(mntmAbout);
+		
+		JMenuItem mntmHelp = new JMenuItem("Help...");
+		mnInfo.add(mntmHelp);
+		getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel.setBounds(10, 11, 798, 91);
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JButton btnCreateAgent = new JButton("Create Agent");
+		btnCreateAgent.setBounds(10, 11, 102, 28);
+		panel.add(btnCreateAgent);
+		
+		JButton btnDeleteAgent = new JButton("Delete Agent");
+		btnDeleteAgent.setBounds(122, 11, 102, 28);
+		panel.add(btnDeleteAgent);
+		
+		JButton btnControlAgent = new JButton("Control Agent");
+		btnControlAgent.setBounds(234, 11, 102, 28);
+		panel.add(btnControlAgent);
+		
+		JButton btnSendMessage = new JButton("Send Message");
+		btnSendMessage.setBounds(346, 11, 102, 28);
+		panel.add(btnSendMessage);
+		
+		JButton btnChat = new JButton("Chat");
+		btnChat.setBounds(458, 11, 102, 28);
+		panel.add(btnChat);
+		
+		JButton btnCaptureScreen = new JButton("Capture");
+		btnCaptureScreen.setBounds(570, 11, 102, 28);
+		panel.add(btnCaptureScreen);
+		
+		JButton btnShutdown = new JButton("Shutdown");
+		btnShutdown.setBounds(682, 11, 102, 28);
+		panel.add(btnShutdown);
+		
+		JButton btnRestart = new JButton("Restart");
+		btnRestart.setBounds(10, 50, 102, 28);
+		panel.add(btnRestart);
+		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.setBounds(122, 50, 102, 28);
+		panel.add(btnLogout);
+		
+		JButton btnDisk = new JButton("Disk");
+		btnDisk.setBounds(234, 50, 102, 28);
+		panel.add(btnDisk);
+		
+		JLabel lblNewLabel = new JLabel("Agents List");
+		lblNewLabel.setBounds(10, 115, 86, 14);
+		getContentPane().add(lblNewLabel);
+		
+		table = new JTable();
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table.setShowHorizontalLines(false);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Name", "IP", "Position", "State", "Created"
+			}
+		));
+		table.setBounds(10, 140, 437, 452);
+		getContentPane().add(table);
+		
+		JLabel lblAgentInformation = new JLabel("Agent Information");
+		lblAgentInformation.setBounds(454, 113, 104, 14);
+		getContentPane().add(lblAgentInformation);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_1.setBounds(457, 141, 351, 194);
+		getContentPane().add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel lblId = new JLabel("ID:");
+		lblId.setBounds(10, 11, 46, 14);
+		panel_1.add(lblId);
+		
+		JLabel lblName = new JLabel("Name:");
+		lblName.setBounds(10, 36, 46, 14);
+		panel_1.add(lblName);
+		
+		JLabel lblPosition = new JLabel("Position:");
+		lblPosition.setBounds(10, 61, 46, 14);
+		panel_1.add(lblPosition);
+		
+		JLabel lblServerMonitor = new JLabel("Server Monitor:");
+		lblServerMonitor.setBounds(10, 86, 75, 14);
+		panel_1.add(lblServerMonitor);
+		
+		JLabel lblCreatedTime = new JLabel("Created Time:");
+		lblCreatedTime.setBounds(10, 111, 75, 14);
+		panel_1.add(lblCreatedTime);
+		
+		JLabel lblStatus = new JLabel("Status:");
+		lblStatus.setBounds(10, 136, 46, 14);
+		panel_1.add(lblStatus);
+		
+		JLabel labAgentServerMonitor = new JLabel("...");
+		labAgentServerMonitor.setBounds(93, 86, 248, 14);
+		panel_1.add(labAgentServerMonitor);
+		
+		JLabel labAgentCreatedTime = new JLabel("...");
+		labAgentCreatedTime.setBounds(93, 111, 248, 14);
+		panel_1.add(labAgentCreatedTime);
+		
+		JLabel labAgentStatus = new JLabel("...");
+		labAgentStatus.setBounds(93, 136, 248, 14);
+		panel_1.add(labAgentStatus);
+		
+		JLabel labAgentPosition = new JLabel("...");
+		labAgentPosition.setBounds(93, 61, 248, 14);
+		panel_1.add(labAgentPosition);
+		
+		JLabel labAgentName = new JLabel("...");
+		labAgentName.setBounds(93, 36, 248, 14);
+		panel_1.add(labAgentName);
+		
+		JLabel labAgentId = new JLabel("...");
+		labAgentId.setBounds(93, 11, 248, 14);
+		panel_1.add(labAgentId);
+		
+		JLabel lblWorkstation = new JLabel("Workstation Information");
+		lblWorkstation.setBounds(454, 346, 148, 14);
+		getContentPane().add(lblWorkstation);
+		
+		JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_2.setBounds(457, 371, 354, 136);
+		getContentPane().add(panel_2);
+		panel_2.setLayout(null);
+		
+		JLabel lblName_1 = new JLabel("Name:");
+		lblName_1.setBounds(10, 11, 46, 14);
+		panel_2.add(lblName_1);
+		
+		JLabel lblIp = new JLabel("IP:");
+		lblIp.setBounds(10, 36, 46, 14);
+		panel_2.add(lblIp);
+		
+		JLabel lblOs = new JLabel("OS:");
+		lblOs.setBounds(10, 61, 46, 14);
+		panel_2.add(lblOs);
+		
+		JLabel lblArchitecture = new JLabel("Architecture:");
+		lblArchitecture.setBounds(31, 86, 78, 14);
+		panel_2.add(lblArchitecture);
+		
+		JLabel lblVersion = new JLabel("Version:");
+		lblVersion.setBounds(30, 111, 46, 14);
+		panel_2.add(lblVersion);
+		
+		JLabel labWorkstationArchitecture = new JLabel("...");
+		labWorkstationArchitecture.setBounds(96, 86, 248, 14);
+		panel_2.add(labWorkstationArchitecture);
+		
+		JLabel labWorkstationVersion = new JLabel("...");
+		labWorkstationVersion.setBounds(96, 111, 248, 14);
+		panel_2.add(labWorkstationVersion);
+		
+		JLabel labWorkstationOS = new JLabel("...");
+		labWorkstationOS.setBounds(96, 61, 248, 14);
+		panel_2.add(labWorkstationOS);
+		
+		JLabel labWorkstationIP = new JLabel("...");
+		labWorkstationIP.setBounds(96, 36, 248, 14);
+		panel_2.add(labWorkstationIP);
+		
+		JLabel labWorkstationName = new JLabel("...");
+		labWorkstationName.setBounds(96, 11, 248, 14);
+		panel_2.add(labWorkstationName);
+		
+		JLabel lblMoveAgent = new JLabel("Move Agent");
+		lblMoveAgent.setBounds(454, 518, 80, 14);
+		getContentPane().add(lblMoveAgent);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_3.setBounds(457, 543, 354, 145);
+		getContentPane().add(panel_3);
+		panel_3.setLayout(null);
+		
+		JList list = new JList();
+		list.setBounds(10, 34, 235, 100);
+		panel_3.add(list);
+		
+		JLabel lblPosition_1 = new JLabel("Position");
+		lblPosition_1.setBounds(10, 11, 46, 14);
+		panel_3.add(lblPosition_1);
+		
+		JButton btnMove = new JButton("Move");
+		btnMove.setBounds(255, 31, 89, 23);
+		panel_3.add(btnMove);
+		
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBounds(255, 65, 89, 23);
+		panel_3.add(btnUpdate);
+		
+		JLabel lblConnectionInformation = new JLabel("Connection Information");
+		lblConnectionInformation.setBounds(10, 603, 205, 14);
+		getContentPane().add(lblConnectionInformation);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_4.setBounds(10, 628, 383, 60);
+		getContentPane().add(panel_4);
+		panel_4.setLayout(null);
+		
+		JLabel lblServerIp = new JLabel("Server IP:");
+		lblServerIp.setBounds(10, 11, 76, 14);
+		panel_4.add(lblServerIp);
+		
+		JLabel lblServerPort = new JLabel("Server Port:");
+		lblServerPort.setBounds(10, 36, 76, 14);
+		panel_4.add(lblServerPort);
+		
+		JLabel labConnectionServerPort = new JLabel("3393");
+		labConnectionServerPort.setBounds(75, 36, 46, 14);
+		panel_4.add(labConnectionServerPort);
+		
+		JLabel labConnectionServerIP = new JLabel("192.168.1.x");
+		labConnectionServerIP.setBounds(75, 11, 121, 14);
+		panel_4.add(labConnectionServerIP);
+	}
+
+	private static final long serialVersionUID = 1L;
+	private JTable table;
+}
