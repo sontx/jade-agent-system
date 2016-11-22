@@ -532,8 +532,13 @@ public class ServerMonitorFrame extends JFrame {
 
 	protected void createAgent() {
 		try {
-			ServerProgram.getMainContainer().createNewAgent("move-server",
-					"com.blogspot.sontx.jade.agentsystem.server.agent.MobileAgent", new Object[] {}).start();
+			String name = JOptionPane.showInputDialog(this, "Enter agent name");
+			if (name != null && name.equals(name)) {
+				AgentController agentController = ServerProgram.getMainContainer().createNewAgent(name,
+						"com.blogspot.sontx.jade.agentsystem.server.agent.ExampleAgent", new Object[] {});
+				agentController.start();
+				JOptionPane.showMessageDialog(this, "Created " + agentController.getName());
+			}
 		} catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
