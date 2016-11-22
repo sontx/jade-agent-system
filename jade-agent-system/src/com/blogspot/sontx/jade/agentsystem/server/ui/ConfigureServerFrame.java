@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import com.blogspot.sontx.jade.agentsystem.server.Constants;
 
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class ConfigureServerFrame extends JFrame {
@@ -83,6 +84,9 @@ public class ConfigureServerFrame extends JFrame {
 			onConfigurationChangedListener.onConfigurationChanged(imagesDirectory, port);
 		System.setProperty("port", port + "");
 		System.setProperty("imgdir", imagesDirectory);
+		File dir = new File(imagesDirectory);
+		if (!dir.isDirectory())
+			dir.mkdirs();
 		dispose();
 	}
 
