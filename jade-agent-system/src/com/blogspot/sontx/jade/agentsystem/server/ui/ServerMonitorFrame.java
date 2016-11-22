@@ -397,8 +397,7 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void logoutComputer() {
-		// TODO Auto-generated method stub
-
+		serverAgent.orderedLogout();
 	}
 
 	protected void restartComputer() {
