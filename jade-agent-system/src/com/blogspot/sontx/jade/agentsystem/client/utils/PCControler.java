@@ -1,12 +1,7 @@
-package com.blogspot.sontx.jade.agentsystem.client;
+package com.blogspot.sontx.jade.agentsystem.client.utils;
 
 import java.io.IOException;
 
-/**
- * @author trongvn13
- *
- * Nov 22, 2016 - 4:23:46 PM
- */
 public class PCControler {
 	public static void shutdown() {
 		shutdown(0);
