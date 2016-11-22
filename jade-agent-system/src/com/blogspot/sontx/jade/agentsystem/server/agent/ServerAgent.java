@@ -88,4 +88,9 @@ public class ServerAgent extends Agent {
 	public void orderedShutdown() {
 		sendInternalRequset("shutdown-server");
 	}
+
+	public void orderedRestart() {
+		sendInternalRequset("restart-server");
+		
+	}
 }

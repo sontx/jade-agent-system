@@ -401,7 +401,7 @@ public class ServerMonitorFrame extends JFrame {
 	}
 
 	protected void restartComputer() {
-		// TODO Auto-generated method stub
+		serverAgent.orderedRestart();
 
 	}
 
