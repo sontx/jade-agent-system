@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.JScrollPane;
 import java.awt.Color;
+import java.awt.Font;
 
 public class ChattingJFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -43,6 +44,8 @@ public class ChattingJFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!isWide()) {
 					iChatAgenBase.sendText(getMessage());
+					setTextDislay("Me: " + textAreaEnterMessage.getText());
+					textAreaEnterMessage.setText("");
 				} else {
 					showMessage();
 				}
@@ -56,9 +59,9 @@ public class ChattingJFrame extends JFrame {
 		contentPane.add(scrollPaneTextEnterMessage);
 
 		textAreaDislayMessage = new JTextArea();
-		textAreaDislayMessage.setForeground(Color.BLUE);
-		textAreaDislayMessage.setEnabled(false);
 		textAreaDislayMessage.setEditable(false);
+		textAreaDislayMessage.setFont(new Font("Monospaced", Font.BOLD, 20));
+		textAreaDislayMessage.setForeground(Color.BLUE);
 		JScrollPane scrollPaneDislayMessage = new JScrollPane(textAreaDislayMessage);
 		scrollPaneDislayMessage.setBounds(10, 11, 294, 184);
 		contentPane.add(scrollPaneDislayMessage);
@@ -78,7 +81,6 @@ public class ChattingJFrame extends JFrame {
 
 	private void showMessage() {
 		SwingUtilities.invokeLater(new Runnable() {
-
 			@Override
 			public void run() {
 				JOptionPane.showMessageDialog(null, "Enter again!");

@@ -32,7 +32,7 @@ public class ChattingAgentServer extends Agent implements IChatAgenBase {
 	@Override
 	public void sendText(String st) {
 		if (who != null) {
-			who.setContent(st);
+			who.setContent("You: " + st);
 			send(who);
 		}
 	}
