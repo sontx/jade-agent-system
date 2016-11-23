@@ -533,7 +533,7 @@ public class ServerMonitorFrame extends JFrame {
 			String name = JOptionPane.showInputDialog(this, "Enter agent name");
 			if (name != null && name.equals(name)) {
 				AgentController agentController = ServerProgram.getMainContainer().createNewAgent(name,
-						"com.blogspot.sontx.jade.agentsystem.server.agent.ExampleAgent", new Object[] {});
+						"com.blogspot.votung.jade.agentsystem.server.agent.ExampleAgent", new Object[] {});
 				agentController.start();
 				JOptionPane.showMessageDialog(this, "Created " + agentController.getName());
 				refreshAgentsList();
