@@ -41,24 +41,24 @@ public class ServerProgram {
 							rma = mainContainer.createNewAgent("rma", "jade.tools.rma.rma", new Object[0]);
 							rma.start();
 							mainContainer.createNewAgent("VoTung",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.ServerAgent",
+									"com.blogspot.votung.jade.agentsystem.server.agent.ServerAgent",
 									new Object[] { savingImagesDirectory }).start();
 							mainContainer.createNewAgent("disk-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.DiskAgent", new Object[] {}).start();
+									"com.blogspot.votung.jade.agentsystem.server.agent.DiskAgent", new Object[] {}).start();
 							mainContainer.createNewAgent("chat-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.ChattingAgentServer", new Object[] {}).start();
+									"com.blogspot.votung.jade.agentsystem.server.agent.ChattingAgentServer", new Object[] {}).start();
 							mainContainer.createNewAgent("logout-server", 
-									"com.blogspot.sontx.jade.agentsystem.server.agent.LogoutAgent", new Object[] {}).start();
+									"com.blogspot.votung.jade.agentsystem.server.agent.LogoutAgent", new Object[] {}).start();
 							mainContainer.createNewAgent("shutdown-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.ShutdownPCAgent", new Object[] {})
+									"com.blogspot.votung.jade.agentsystem.server.agent.ShutdownPCAgent", new Object[] {})
 									.start();
 							mainContainer.createNewAgent("send-message-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.SendMessageAgent",
+									"com.blogspot.votung.jade.agentsystem.server.agent.SendMessageAgent",
 									new Object[] {}).start();
 							mainContainer.createNewAgent("restart-server",
-									"com.blogspot.sontx.jade.agentsystem.server.agent.RestartPCAgent", new Object[] {}).start();
+									"com.blogspot.votung.jade.agentsystem.server.agent.RestartPCAgent", new Object[] {}).start();
 							mainContainer.createNewAgent("capture-server", 
-									"com.blogspot.sontx.jade.agentsystem.server.agent.CaptureAgent", new Object[] {}).start();
+									"com.blogspot.votung.jade.agentsystem.server.agent.CaptureAgent", new Object[] {}).start();
 						} catch (StaleProxyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
