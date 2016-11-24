@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 public class SendMessageServerFrame extends JFrame {
 	private SendMessageAgent sendMessageAgent;
 
-	public SendMessageServerFrame(SendMessageAgent sendMessageAgent) {
+	public SendMessageServerFrame(final SendMessageAgent sendMessageAgent) {
 		setTitle("Send Message");
 		setSize(300, 221);
 		getContentPane().setLayout(null);
