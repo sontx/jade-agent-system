@@ -64,6 +64,7 @@ public class ServerMonitorFrame extends JFrame {
 		setResizable(false);
 		setTitle("Server Monitor: Agent Management System");
 		setSize(834, 773);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
