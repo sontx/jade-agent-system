@@ -35,11 +35,15 @@ import jade.wrapper.StaleProxyException;
 import javax.swing.ListSelectionModel;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ServerMonitorFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -58,6 +62,7 @@ public class ServerMonitorFrame extends JFrame {
 	private JLabel labConnectionServerIP;
 	private JLabel labConnectionServerPort;
 	private JList<Location> lstLocation;
+	private JLabel labelHostname;
 
 	public ServerMonitorFrame(ServerAgent serverAgent) {
 		this.serverAgent = serverAgent;
@@ -316,7 +321,7 @@ public class ServerMonitorFrame extends JFrame {
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_3.setBounds(457, 543, 354, 145);
+		panel_3.setBounds(457, 543, 354, 170);
 		getContentPane().add(panel_3);
 		panel_3.setLayout(null);
 
@@ -346,10 +351,25 @@ public class ServerMonitorFrame extends JFrame {
 		scrollPane_1.setBounds(10, 31, 236, 103);
 		panel_3.add(scrollPane_1);
 
+		labelHostname = new JLabel("Selected Hostname");
+		labelHostname.setBounds(10, 142, 172, 17);
+		panel_3.add(labelHostname);
+
 		lstLocation = new JList<Location>();
+		lstLocation.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Location location = lstLocation.getSelectedValue();
+				try {
+					ServerMonitorFrame.this.labelHostname.setText(InetAddress.getByName(location.getAddress()).getHostName());
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		lstLocation.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_1.setViewportView(lstLocation);
-
+		
 		JLabel lblConnectionInformation = new JLabel("Connection Information");
 		lblConnectionInformation.setBounds(10, 603, 205, 14);
 		getContentPane().add(lblConnectionInformation);
