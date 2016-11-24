@@ -29,7 +29,7 @@ public class ChattingAgentClient extends MobileAgent {
 		public void action() {
 			ACLMessage msg = myAgent.receive();
 			if (msg != null) {
-				if (!isMoved(msg)) {
+				if (isNormalMessage(msg)) {
 					who = msg.createReply();
 					ChattingAgentClient.this.frame = getFrame();
 					ChattingAgentClient.this.frame.setVisible(true);

@@ -20,7 +20,7 @@ public class ShutdownPCAgent extends MobileAgent {
 		public void action() {
 			ACLMessage msg = myAgent.receive();
 			if (msg != null) {
-				if (!isMoved(msg)) {
+				if (isNormalMessage(msg)) {
 					SystemManager.shutdown();
 				}
 			} else {

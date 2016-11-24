@@ -16,7 +16,7 @@ public class RestartPCAgent extends MobileAgent {
 		public void action() {
 			ACLMessage msg = myAgent.receive();
 			if(msg!= null){
-				if (!isMoved(msg)) {
+				if (isNormalMessage(msg)) {
 					SystemManager.restart();
 				}
 			}else{

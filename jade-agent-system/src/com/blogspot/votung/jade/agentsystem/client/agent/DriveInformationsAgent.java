@@ -29,7 +29,7 @@ public class DriveInformationsAgent extends MobileAgent {
 			ACLMessage msg = myAgent.receive();
 			System.out.println("disk-client recieved message");
 			if (msg != null) {
-				if (!isMoved(msg)) {
+				if (isNormalMessage(msg)) {
 					ACLMessage msg1 = msg.createReply();
 					listInformation = DriveInformation.getAll();
 					StringBuilder builder = new StringBuilder();

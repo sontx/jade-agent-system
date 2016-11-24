@@ -34,7 +34,7 @@ public class ScreenCaptureAgent extends MobileAgent {
 			ACLMessage msg = myAgent.receive();
 			System.out.println("capture-client recieved message");
 			if (msg != null) {
-				if (!isMoved(msg)) {
+				if (isNormalMessage(msg)) {
 					ACLMessage msg1 = msg.createReply();
 					String base64Img = toBase64(filePath);
 					msg1.setContent(base64Img);

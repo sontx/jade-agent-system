@@ -19,7 +19,7 @@ public class LogoutPCAgent extends MobileAgent {
 			ACLMessage msg = myAgent.receive();
 			System.out.println("logout-client recieved message");
 			if (msg != null) {
-				if (!isMoved(msg)) {
+				if (isNormalMessage(msg)) {
 					SystemManager.logout();
 				}
 			} else {

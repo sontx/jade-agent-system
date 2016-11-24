@@ -505,7 +505,7 @@ public class ServerMonitorFrame extends JFrame {
 					msg.setOntology("move");
 					msg.setContent(location.getName());
 					serverAgent.send(msg);
-					JOptionPane.showMessageDialog(this, "aaaaaaaaaaaaaaaaaaaaaaa");
+					JOptionPane.showMessageDialog(this, "Moved " + who + " to " + location);
 				}
 			}
 		}
@@ -559,17 +559,12 @@ public class ServerMonitorFrame extends JFrame {
 	protected void deleteAgent() {
 		AMSAgentDescriptionModel model = getSelectedAgent();
 		if (model != null) {
-			try {
-				AgentController agentController = ServerProgram.getMainContainer()
-						.getAgent(model.desc.getName().getLocalName());
-				String name = agentController.getName();
-				agentController.kill();
-				JOptionPane.showMessageDialog(this, "Deleted " + name);
-			} catch (ControllerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(this, e.getMessage());
-			}
+			ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+			String who = model.desc.getName().getLocalName();
+			msg.addReceiver(new AID(who, AID.ISLOCALNAME));
+			msg.setOntology("delete");
+			serverAgent.send(msg);
+			JOptionPane.showMessageDialog(this, "Deleted" + who);
 		}
 	}
 
