@@ -6,6 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.blogspot.votung.jade.agentsystem.bo.IChatAgenBase;
+import com.blogspot.votung.jade.agentsystem.client.agent.ChattingAgentClient;
+
+import jade.core.Agent;
+import jade.lang.acl.ACLMessage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,11 +27,14 @@ public class ChattingJFrame extends JFrame {
 	private JTextArea textAreaEnterMessage;
 	private JTextArea textAreaDislayMessage;
 	private IChatAgenBase iChatAgenBase;
+	private ACLMessage reply;
+	private Agent agent;
 
-	public ChattingJFrame(IChatAgenBase iChatAgenBase) {
+	public ChattingJFrame(String title) {
+		super(title);
 		createPanelMain();
-		this.iChatAgenBase = iChatAgenBase;
-		setTitle(iChatAgenBase.getName());
+		/*this.iChatAgenBase = iChatAgenBase;
+		setTitle(iChatAgenBase.getName());*/
 	}
 
 	private void createPanelMain() {
@@ -43,7 +50,9 @@ public class ChattingJFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!isWide()) {
-					iChatAgenBase.sendText(getMessage());
+					ChattingJFrame.this.reply.setContent("You: " +ChattingJFrame.this.textAreaEnterMessage.getText());
+					ChattingJFrame.this.agent.send(ChattingJFrame.this.reply);
+//					iChatAgenBase.sendText(getMessage());
 					setTextDislay("Me: " + textAreaEnterMessage.getText());
 					textAreaEnterMessage.setText("");
 				} else {
@@ -86,5 +95,17 @@ public class ChattingJFrame extends JFrame {
 				JOptionPane.showMessageDialog(null, "Enter again!");
 			}
 		});
+	}
+
+	public void appendText(String content) {
+		textAreaDislayMessage.append(content + "\n");
+	}
+
+	public void setReply(ACLMessage who) {
+		this.reply = who;
+	}
+
+	public void setAgent(Agent chattingAgentClient) {
+		this.agent = chattingAgentClient;
 	}
 }

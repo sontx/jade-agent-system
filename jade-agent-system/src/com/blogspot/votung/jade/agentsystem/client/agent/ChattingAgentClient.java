@@ -4,7 +4,6 @@ import com.blogspot.votung.jade.agentsystem.bo.IChatAgenBase;
 import com.blogspot.votung.jade.agentsystem.ui.ChattingJFrame;
 
 import jade.core.Agent;
-import jade.core.ContainerID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
@@ -44,15 +43,14 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 		public void action() {
 			ACLMessage msg = myAgent.receive();
 			if (msg != null) {
-//				ChattingAgentClient.this.frame = getFrame();
-//				who = msg.createReply();
-////				appendText(msg.getContent());
-//				ChattingAgentClient.this.frame.setVisible(true);
-//				ChattingAgentClient.this.frame.setAgent(ChattingAgentClient.this);
-//				ChattingAgentClient.this.frame.setReply(who);
-//				ChattingAgentClient.this.frame.appendText(msg.getContent());
-//				System.out.println("chat-client sent response");
-				doMove(new ContainerID(msg.getContent(), null));
+				ChattingAgentClient.this.frame = getFrame();
+				who = msg.createReply();
+//				appendText(msg.getContent());
+				ChattingAgentClient.this.frame.setVisible(true);
+				ChattingAgentClient.this.frame.setAgent(ChattingAgentClient.this);
+				ChattingAgentClient.this.frame.setReply(who);
+				ChattingAgentClient.this.frame.appendText(msg.getContent());
+				System.out.println("chat-client sent response");
 			} else {
 				block();
 			}
