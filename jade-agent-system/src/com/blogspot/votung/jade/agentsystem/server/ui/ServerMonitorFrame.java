@@ -25,8 +25,10 @@ import com.blogspot.votung.jade.agentsystem.server.agent.ServerAgent;
 
 import jade.content.lang.Codec.CodecException;
 import jade.content.onto.OntologyException;
+import jade.core.AID;
 import jade.core.Location;
 import jade.domain.FIPAAgentManagement.AMSAgentDescription;
+import jade.lang.acl.ACLMessage;
 import jade.util.leap.Iterator;
 import jade.wrapper.AgentController;
 import jade.wrapper.ControllerException;
@@ -484,8 +486,13 @@ public class ServerMonitorFrame extends JFrame {
 					agentController.move(location);
 					JOptionPane.showMessageDialog(this, "Moved " + agentController.getName() + " to " + location);
 				} catch (ControllerException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+					String who = model.desc.getName().getLocalName();
+					System.out.println("nguoi se nhan " + who);
+					msg.addReceiver(new AID(who, AID.ISLOCALNAME));
+					msg.setOntology("move");
+					msg.setContent(location.getName());
+					serverAgent.send(msg);
 				}
 			}
 		}
