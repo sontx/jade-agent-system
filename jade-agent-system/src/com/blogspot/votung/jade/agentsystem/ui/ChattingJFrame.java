@@ -13,6 +13,8 @@ import jade.lang.acl.ACLMessage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -33,8 +35,16 @@ public class ChattingJFrame extends JFrame {
 	public ChattingJFrame(String title) {
 		super(title);
 		createPanelMain();
-		/*this.iChatAgenBase = iChatAgenBase;
-		setTitle(iChatAgenBase.getName());*/
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				textAreaDislayMessage.setText("");
+			}
+		});
+		/*
+		 * this.iChatAgenBase = iChatAgenBase;
+		 * setTitle(iChatAgenBase.getName());
+		 */
 	}
 
 	private void createPanelMain() {
@@ -50,9 +60,9 @@ public class ChattingJFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (!isWide()) {
-					ChattingJFrame.this.reply.setContent("You: " +ChattingJFrame.this.textAreaEnterMessage.getText());
+					ChattingJFrame.this.reply.setContent("You: " + ChattingJFrame.this.textAreaEnterMessage.getText());
 					ChattingJFrame.this.agent.send(ChattingJFrame.this.reply);
-//					iChatAgenBase.sendText(getMessage());
+					// iChatAgenBase.sendText(getMessage());
 					setTextDislay("Me: " + textAreaEnterMessage.getText());
 					textAreaEnterMessage.setText("");
 				} else {

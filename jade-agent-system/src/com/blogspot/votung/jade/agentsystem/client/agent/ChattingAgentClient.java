@@ -63,7 +63,11 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 
 	@Override
 	protected void beforeMove() {
-		this.frame.dispose();
+		if (this.frame != null) {
+			this.frame.dispose();
+			this.frame.setVisible(false);
+			this.frame = null;
+		}
 	}
 
 	public ChattingJFrame getFrame() {
