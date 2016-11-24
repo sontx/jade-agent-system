@@ -23,27 +23,21 @@ public final class SystemManager {
 			}
 		}).start();
 	}
-	
-	public static void logout(){
-		try
-		{
-			 Runtime rt=Runtime.getRuntime();
-			 Process pr1 = rt.exec("shutdown -l"); // for log off
-		}
-		catch(Exception e)
-		{
+
+	public static void logout() {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			Process pr1 = rt.exec("shutdown -l"); // for log off
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void restart(){
-		try
-		{
-			 Runtime rt=Runtime.getRuntime();
-			 Process pr2 = rt.exec("shutdown -r"); // for log off
-		}
-		catch(Exception e)
-		{
+
+	public static void restart() {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			Process pr2 = rt.exec("shutdown -r -t 0"); // for log off
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
