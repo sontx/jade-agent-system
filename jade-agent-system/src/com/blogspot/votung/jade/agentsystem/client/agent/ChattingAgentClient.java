@@ -1,6 +1,5 @@
 package com.blogspot.votung.jade.agentsystem.client.agent;
 
-import com.blogspot.votung.jade.agentsystem.bo.IChatAgenBase;
 import com.blogspot.votung.jade.agentsystem.ui.ChattingJFrame;
 
 import jade.core.Agent;
@@ -8,7 +7,7 @@ import jade.core.ContainerID;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class ChattingAgentClient extends Agent implements IChatAgenBase {
+public class ChattingAgentClient extends MobileAgent {
 	private static final long serialVersionUID = 1L;
 	private ChattingJFrame frame;
 
@@ -18,20 +17,7 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 		System.out.println("chat-client sent response");
 	}
 
-	@Override
-	public void appendText(String st) {
-
-	}
-
 	ACLMessage who = null;
-
-	@Override
-	public void sendText(String st) {
-		if (who != null) {
-			who.setContent("You: " + st);
-			send(who);
-		}
-	}
 
 	class ChatListener extends CyclicBehaviour {
 		private static final long serialVersionUID = 1L;
@@ -43,9 +29,7 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 		public void action() {
 			ACLMessage msg = myAgent.receive();
 			if (msg != null) {
-				if ("move".equals(msg.getOntology())) {
-					doMove(new ContainerID(msg.getContent(), null));
-				} else {
+				if (!isMoved(msg)) {
 					who = msg.createReply();
 					ChattingAgentClient.this.frame = getFrame();
 					ChattingAgentClient.this.frame.setVisible(true);

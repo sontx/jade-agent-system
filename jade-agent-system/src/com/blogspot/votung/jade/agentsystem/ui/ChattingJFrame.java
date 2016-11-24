@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.blogspot.votung.jade.agentsystem.bo.IChatAgenBase;
 import com.blogspot.votung.jade.agentsystem.client.agent.ChattingAgentClient;
 
 import jade.core.Agent;
@@ -28,7 +27,6 @@ public class ChattingJFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextArea textAreaEnterMessage;
 	private JTextArea textAreaDislayMessage;
-	private IChatAgenBase iChatAgenBase;
 	private ACLMessage reply;
 	private Agent agent;
 
@@ -41,10 +39,6 @@ public class ChattingJFrame extends JFrame {
 				textAreaDislayMessage.setText("");
 			}
 		});
-		/*
-		 * this.iChatAgenBase = iChatAgenBase;
-		 * setTitle(iChatAgenBase.getName());
-		 */
 	}
 
 	private void createPanelMain() {
@@ -62,7 +56,6 @@ public class ChattingJFrame extends JFrame {
 				if (!isWide()) {
 					ChattingJFrame.this.reply.setContent("You: " + ChattingJFrame.this.textAreaEnterMessage.getText());
 					ChattingJFrame.this.agent.send(ChattingJFrame.this.reply);
-					// iChatAgenBase.sendText(getMessage());
 					setTextDislay("Me: " + textAreaEnterMessage.getText());
 					textAreaEnterMessage.setText("");
 				} else {
