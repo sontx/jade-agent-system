@@ -12,11 +12,11 @@ import javax.swing.JTextField;
 public class ConfigureClientFrame extends JFrame {
 	public ConfigureClientFrame() {
 		setTitle("Configure Client");
-		setSize(347, 238);
+		setSize(347, 180);
 		getContentPane().setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(121, 155, 200, 45);
+		panel.setBounds(71, 86, 200, 45);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 
@@ -47,14 +47,24 @@ public class ConfigureClientFrame extends JFrame {
 		getContentPane().add(lblNewLabel);
 
 		txtIP = new JTextField();
-		txtIP.setBounds(144, 8, 174, 20);
+		txtIP.setBounds(90, 8, 141, 20);
 		getContentPane().add(txtIP);
 		txtIP.setColumns(10);
 
 		txtPort = new JTextField();
-		txtPort.setBounds(144, 33, 174, 20);
+		txtPort.setText("3393");
+		txtPort.setBounds(90, 33, 231, 20);
 		getContentPane().add(txtPort);
 		txtPort.setColumns(10);
+		
+		JButton btnAuto = new JButton("Auto");
+		btnAuto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new AutoScanIp(ConfigureClientFrame.this);
+			}
+		});
+		btnAuto.setBounds(241, 7, 80, 23);
+		getContentPane().add(btnAuto);
 	}
 
 	private void updateClientConfigure(int port, String address) {
@@ -82,5 +92,9 @@ public class ConfigureClientFrame extends JFrame {
 	
 	public interface OnConfigurationChangedListener {
 		void onConfigurationChanged(String address, int port);
+	}
+
+	public void setIp(String ip) {
+		txtIP.setText(ip);
 	}
 }
