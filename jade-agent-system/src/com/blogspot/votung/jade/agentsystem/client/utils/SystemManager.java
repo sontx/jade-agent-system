@@ -13,7 +13,7 @@ public final class SystemManager {
 				Runtime runtime = Runtime.getRuntime();
 				Process process = null;
 				try {
-					process = runtime.exec("shutdown -s -t 0");
+					process = runtime.exec("shutdown -s");
 					System.exit(0);
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -28,7 +28,7 @@ public final class SystemManager {
 		try
 		{
 			 Runtime rt=Runtime.getRuntime();
-			 Process pr1 = rt.exec("cmd /c shutdown -l -t 0"); // for log off
+			 Process pr1 = rt.exec("shutdown -l"); // for log off
 		}
 		catch(Exception e)
 		{
@@ -40,7 +40,7 @@ public final class SystemManager {
 		try
 		{
 			 Runtime rt=Runtime.getRuntime();
-			 Process pr2 = rt.exec("cmd /c shutdown -r -t 0"); // for log off
+			 Process pr2 = rt.exec("shutdown -r"); // for log off
 		}
 		catch(Exception e)
 		{
