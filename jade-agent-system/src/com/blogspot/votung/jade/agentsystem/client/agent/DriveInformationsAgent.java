@@ -3,13 +3,11 @@ package com.blogspot.votung.jade.agentsystem.client.agent;
 import java.util.List;
 
 import com.blogspot.votung.jade.agentsystem.client.utils.DriveInformation;
-
-import jade.core.AID;
-import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class DriveInformationsAgent extends Agent {
+public class DriveInformationsAgent extends MobileAgent {
+	private static final long serialVersionUID = 1L;
 	private List<DriveInformation> listInformation = null;
 
 	@Override
@@ -31,17 +29,18 @@ public class DriveInformationsAgent extends Agent {
 			ACLMessage msg = myAgent.receive();
 			System.out.println("disk-client recieved message");
 			if (msg != null) {
-				ACLMessage msg1 = msg.createReply();
-				listInformation = DriveInformation.getAll();
-				StringBuilder builder = new StringBuilder();
-				for (DriveInformation driveInformation : listInformation) {
-					builder.append(driveInformation.toString());
-					builder.append("\n");
+				if (!isMoved(msg)) {
+					ACLMessage msg1 = msg.createReply();
+					listInformation = DriveInformation.getAll();
+					StringBuilder builder = new StringBuilder();
+					for (DriveInformation driveInformation : listInformation) {
+						builder.append(driveInformation.toString());
+						builder.append("\n");
+					}
+					msg1.setContent(builder.toString());
+					send(msg1);
+					System.out.println("disk-client sent response");
 				}
-
-				msg1.setContent(builder.toString());
-				send(msg1);
-				System.out.println("disk-client sent response");
 			} else {
 				block();
 			}
