@@ -583,19 +583,19 @@ public class ServerMonitorFrame extends JFrame {
 	
 	public void createAgentCallback() {
 		try {
-			if ("Đăng xuất".equals(selectedAgent)) {
+			if ("Logout".equals(selectedAgent)) {
 				ServerProgram.getMainContainer().createNewAgent("logout-client", "com.blogspot.votung.jade.agentsystem.client.agent.LogoutPCAgent", new Object[] {}).start();
-			} else if ("Tắt máy".equals(selectedAgent)) {
+			} else if ("Shutdown".equals(selectedAgent)) {
 				ServerProgram.getMainContainer().createNewAgent("shutdown-client", "com.blogspot.votung.jade.agentsystem.client.agent.ShutdownPCAgent", new Object[] {}).start();
-			} else if ("Khởi động lại".equals(selectedAgent)) {
+			} else if ("Restart".equals(selectedAgent)) {
 				ServerProgram.getMainContainer().createNewAgent("restart-client", "com.blogspot.votung.jade.agentsystem.client.agent.RestartPCAgent", new Object[] {}).start();
-			} else if ("Ổ đĩa".equals(selectedAgent)) {
+			} else if ("Disk".equals(selectedAgent)) {
 				ServerProgram.getMainContainer().createNewAgent("disk-client", "com.blogspot.votung.jade.agentsystem.client.agent.DriveInformationsAgent", new Object[] {}).start();
-			} else if ("Chụp ảnh".equals(selectedAgent)) {
+			} else if ("Capture".equals(selectedAgent)) {
 				ServerProgram.getMainContainer().createNewAgent("capture-client", "com.blogspot.votung.jade.agentsystem.client.agent.ScreenCaptureAgent", new Object[] {}).start();
-			} else if ("Tán gẫu".equals(selectedAgent)) {
+			} else if ("Chat".equals(selectedAgent)) {
 				ServerProgram.getMainContainer().createNewAgent("chat-client", "com.blogspot.votung.jade.agentsystem.client.agent.ChattingAgentClient", new Object[] {}).start();
-			} else if ("Gửi thông báo".equals(selectedAgent)) {
+			} else if ("Message".equals(selectedAgent)) {
 				ServerProgram.getMainContainer().createNewAgent("send-message-client", "com.blogspot.votung.jade.agentsystem.client.agent.ReceiveAgentClient", new Object[] {}).start();
 			}
 			refreshAgentsList();

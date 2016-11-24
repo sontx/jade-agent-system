@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class CreateAgentFrame extends JFrame implements ActionListener {
 	private JComboBox comboBoxListAgents;
-	public static String[] AGENTS = {"Đăng xuất", "Tắt máy", "Khởi động lại", "Ổ đĩa", "Chụp ảnh", "Tán gẫu", "Gửi thông báo"};
+	public static String[] AGENTS = {"Logout", "Shutdown", "Restart", "Disk", "Capture", "Chat", "Message"};
 	private static String CREATE_AGENT_COMMAND = "create-agent";
 	private ServerMonitorFrame parentFrame;
 	
@@ -24,13 +24,13 @@ public class CreateAgentFrame extends JFrame implements ActionListener {
 		addListAgents(comboBoxListAgents);
 		getContentPane().add(comboBoxListAgents);
 		
-		JButton btnCreateAgent = new JButton("T\u1EA1o Agent");
+		JButton btnCreateAgent = new JButton("Create Agent");
 		btnCreateAgent.setActionCommand(CREATE_AGENT_COMMAND);
 		btnCreateAgent.addActionListener(this);
 		btnCreateAgent.setBounds(10, 112, 163, 23);
 		getContentPane().add(btnCreateAgent);
 		
-		JLabel lblChnAgent = new JLabel("Ch\u1ECDn Agent");
+		JLabel lblChnAgent = new JLabel("Choose Agent");
 		lblChnAgent.setBounds(10, 10, 111, 27);
 		getContentPane().add(lblChnAgent);
 		
