@@ -44,7 +44,6 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 			ACLMessage msg = myAgent.receive();
 			if (msg != null) {
 				if ("move".equals(msg.getOntology())) {
-					beforeMove();
 					doMove(new ContainerID(msg.getContent(), null));
 				} else {
 					who = msg.createReply();
