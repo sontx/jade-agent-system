@@ -4,9 +4,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import com.blogspot.votung.jade.agentsystem.client.agent.ChattingAgentClient;
-
 import jade.core.Agent;
 import jade.lang.acl.ACLMessage;
 
@@ -36,7 +33,10 @@ public class ChattingJFrame extends JFrame {
 		this.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				textAreaDislayMessage.setText("");
+				int value = JOptionPane.showConfirmDialog(null, "Are you sure to close this window?", "Repeat?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (value == JOptionPane.YES_OPTION)
+					textAreaDislayMessage.setText("");
 			}
 		});
 	}

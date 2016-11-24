@@ -334,7 +334,13 @@ public class ServerMonitorFrame extends JFrame {
 		JButton btnMove = new JButton("Move");
 		btnMove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				moveAgent();
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						moveAgent();
+					}
+				}).start();
+
 			}
 		});
 		btnMove.setBounds(255, 31, 89, 23);
@@ -363,7 +369,8 @@ public class ServerMonitorFrame extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				Location location = lstLocation.getSelectedValue();
 				try {
-					ServerMonitorFrame.this.labelHostname.setText(InetAddress.getByName(location.getAddress()).getHostName());
+					ServerMonitorFrame.this.labelHostname
+							.setText(InetAddress.getByName(location.getAddress()).getHostName());
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				}
@@ -371,7 +378,7 @@ public class ServerMonitorFrame extends JFrame {
 		});
 		lstLocation.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_1.setViewportView(lstLocation);
-		
+
 		JLabel lblConnectionInformation = new JLabel("Connection Information");
 		lblConnectionInformation.setBounds(10, 603, 205, 14);
 		getContentPane().add(lblConnectionInformation);
@@ -488,11 +495,11 @@ public class ServerMonitorFrame extends JFrame {
 				} catch (ControllerException e) {
 					ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 					String who = model.desc.getName().getLocalName();
-					System.out.println("nguoi se nhan " + who);
 					msg.addReceiver(new AID(who, AID.ISLOCALNAME));
 					msg.setOntology("move");
 					msg.setContent(location.getName());
 					serverAgent.send(msg);
+					JOptionPane.showMessageDialog(this, "aaaaaaaaaaaaaaaaaaaaaaa");
 				}
 			}
 		}
@@ -562,52 +569,81 @@ public class ServerMonitorFrame extends JFrame {
 
 	protected void createAgent() {
 		try {
-			/*String name = JOptionPane.showInputDialog(this, "Enter agent name");*/
+			/*
+			 * String name = JOptionPane.showInputDialog(this,
+			 * "Enter agent name");
+			 */
 
 			CreateAgentFrame createFrame = new CreateAgentFrame(this);
-			
-			/*if (name != null && name.equals(name)) {
-				AgentController agentController = ServerProgram.getMainContainer().createNewAgent(name,
-						"com.blogspot.votung.jade.agentsystem.server.agent.ExampleAgent", new Object[] {});
-				agentController.start();
-				JOptionPane.showMessageDialog(this, "Created " + agentController.getName());
-				
-				refreshAgentsList();
-			}*/
-		} /*catch (StaleProxyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} */catch (Exception e) {
+
+			/*
+			 * if (name != null && name.equals(name)) { AgentController
+			 * agentController =
+			 * ServerProgram.getMainContainer().createNewAgent(name,
+			 * "com.blogspot.votung.jade.agentsystem.server.agent.ExampleAgent",
+			 * new Object[] {}); agentController.start();
+			 * JOptionPane.showMessageDialog(this, "Created " +
+			 * agentController.getName());
+			 * 
+			 * refreshAgentsList(); }
+			 */
+		} /*
+			 * catch (StaleProxyException e) { // TODO Auto-generated catch
+			 * block e.printStackTrace(); }
+			 */catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
-	
+
 	private String selectedAgent;
-	
+
 	public void setSelectedAgent(String s) {
 		this.selectedAgent = s;
 	}
-	
+
 	public void createAgentCallback() {
 		try {
 			if ("Logout".equals(selectedAgent)) {
-				ServerProgram.getMainContainer().createNewAgent("logout-client", "com.blogspot.votung.jade.agentsystem.client.agent.LogoutPCAgent", new Object[] {}).start();
+				ServerProgram.getMainContainer()
+						.createNewAgent("logout-client",
+								"com.blogspot.votung.jade.agentsystem.client.agent.LogoutPCAgent", new Object[] {})
+						.start();
 			} else if ("Shutdown".equals(selectedAgent)) {
-				ServerProgram.getMainContainer().createNewAgent("shutdown-client", "com.blogspot.votung.jade.agentsystem.client.agent.ShutdownPCAgent", new Object[] {}).start();
+				ServerProgram.getMainContainer()
+						.createNewAgent("shutdown-client",
+								"com.blogspot.votung.jade.agentsystem.client.agent.ShutdownPCAgent", new Object[] {})
+						.start();
 			} else if ("Restart".equals(selectedAgent)) {
-				ServerProgram.getMainContainer().createNewAgent("restart-client", "com.blogspot.votung.jade.agentsystem.client.agent.RestartPCAgent", new Object[] {}).start();
+				ServerProgram.getMainContainer()
+						.createNewAgent("restart-client",
+								"com.blogspot.votung.jade.agentsystem.client.agent.RestartPCAgent", new Object[] {})
+						.start();
 			} else if ("Disk".equals(selectedAgent)) {
-				ServerProgram.getMainContainer().createNewAgent("disk-client", "com.blogspot.votung.jade.agentsystem.client.agent.DriveInformationsAgent", new Object[] {}).start();
+				ServerProgram.getMainContainer()
+						.createNewAgent("disk-client",
+								"com.blogspot.votung.jade.agentsystem.client.agent.DriveInformationsAgent",
+								new Object[] {})
+						.start();
 			} else if ("Capture".equals(selectedAgent)) {
-				ServerProgram.getMainContainer().createNewAgent("capture-client", "com.blogspot.votung.jade.agentsystem.client.agent.ScreenCaptureAgent", new Object[] {}).start();
+				ServerProgram.getMainContainer()
+						.createNewAgent("capture-client",
+								"com.blogspot.votung.jade.agentsystem.client.agent.ScreenCaptureAgent", new Object[] {})
+						.start();
 			} else if ("Chat".equals(selectedAgent)) {
-				ServerProgram.getMainContainer().createNewAgent("chat-client", "com.blogspot.votung.jade.agentsystem.client.agent.ChattingAgentClient", new Object[] {}).start();
+				ServerProgram.getMainContainer()
+						.createNewAgent("chat-client",
+								"com.blogspot.votung.jade.agentsystem.client.agent.ChattingAgentClient",
+								new Object[] {})
+						.start();
 			} else if ("Message".equals(selectedAgent)) {
-				ServerProgram.getMainContainer().createNewAgent("send-message-client", "com.blogspot.votung.jade.agentsystem.client.agent.ReceiveAgentClient", new Object[] {}).start();
+				ServerProgram.getMainContainer()
+						.createNewAgent("send-message-client",
+								"com.blogspot.votung.jade.agentsystem.client.agent.ReceiveAgentClient", new Object[] {})
+						.start();
 			}
 			refreshAgentsList();
 		} catch (StaleProxyException e) {
-			
+
 		}
 	}
 

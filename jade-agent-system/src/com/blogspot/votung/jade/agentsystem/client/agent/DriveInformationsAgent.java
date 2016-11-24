@@ -46,4 +46,12 @@ public class DriveInformationsAgent extends MobileAgent {
 			}
 		}
 	}
+
+	@Override
+	protected void beforeMove() {
+		if (listInformation != null) {
+			listInformation.clear();
+			listInformation = null;
+		}
+	}
 }
