@@ -48,6 +48,7 @@ public class AgentContrllerFrame extends JFrame {
 		});
 		btnKill.setBounds(118, 99, 103, 23);
 		getContentPane().add(btnKill);
+		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
