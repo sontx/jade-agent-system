@@ -13,11 +13,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.table.DefaultTableModel;
 
+import com.blogspot.votung.jade.agentsystem.client.ClientProgram;
 import com.blogspot.votung.jade.agentsystem.server.ServerProgram;
 import com.blogspot.votung.jade.agentsystem.server.agent.ServerAgent;
 
@@ -31,10 +33,12 @@ import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 
 import javax.swing.ListSelectionModel;
+
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JScrollPane;
 
 public class ServerMonitorFrame extends JFrame {
@@ -530,17 +534,52 @@ public class ServerMonitorFrame extends JFrame {
 
 	protected void createAgent() {
 		try {
-			String name = JOptionPane.showInputDialog(this, "Enter agent name");
-			if (name != null && name.equals(name)) {
+			/*String name = JOptionPane.showInputDialog(this, "Enter agent name");*/
+
+			CreateAgentFrame createFrame = new CreateAgentFrame(this);
+			
+			/*if (name != null && name.equals(name)) {
 				AgentController agentController = ServerProgram.getMainContainer().createNewAgent(name,
 						"com.blogspot.votung.jade.agentsystem.server.agent.ExampleAgent", new Object[] {});
 				agentController.start();
 				JOptionPane.showMessageDialog(this, "Created " + agentController.getName());
+				
 				refreshAgentsList();
-			}
-		} catch (StaleProxyException e) {
+			}*/
+		} /*catch (StaleProxyException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} */catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	private String selectedAgent;
+	
+	public void setSelectedAgent(String s) {
+		this.selectedAgent = s;
+	}
+	
+	public void createAgentCallback() {
+		try {
+			if ("Đăng xuất".equals(selectedAgent)) {
+				ServerProgram.getMainContainer().createNewAgent("logout-client", "com.blogspot.votung.jade.agentsystem.client.agent.LogoutPCAgent", new Object[] {}).start();
+			} else if ("Tắt máy".equals(selectedAgent)) {
+				ServerProgram.getMainContainer().createNewAgent("shutdown-client", "com.blogspot.votung.jade.agentsystem.client.agent.ShutdownPCAgent", new Object[] {}).start();
+			} else if ("Khởi động lại".equals(selectedAgent)) {
+				ServerProgram.getMainContainer().createNewAgent("restart-client", "com.blogspot.votung.jade.agentsystem.client.agent.RestartPCAgent", new Object[] {}).start();
+			} else if ("Ổ đĩa".equals(selectedAgent)) {
+				ServerProgram.getMainContainer().createNewAgent("disk-client", "com.blogspot.votung.jade.agentsystem.client.agent.DriveInformationsAgent", new Object[] {}).start();
+			} else if ("Chụp ảnh".equals(selectedAgent)) {
+				ServerProgram.getMainContainer().createNewAgent("capture-client", "com.blogspot.votung.jade.agentsystem.client.agent.ScreenCaptureAgent", new Object[] {}).start();
+			} else if ("Tán gẫu".equals(selectedAgent)) {
+				ServerProgram.getMainContainer().createNewAgent("chat-client", "com.blogspot.votung.jade.agentsystem.client.agent.ChattingAgentClient", new Object[] {}).start();
+			} else if ("Gửi thông báo".equals(selectedAgent)) {
+				ServerProgram.getMainContainer().createNewAgent("send-message-client", "com.blogspot.votung.jade.agentsystem.client.agent.ReceiveAgentClient", new Object[] {}).start();
+			}
+			refreshAgentsList();
+		} catch (StaleProxyException e) {
+			
 		}
 	}
 

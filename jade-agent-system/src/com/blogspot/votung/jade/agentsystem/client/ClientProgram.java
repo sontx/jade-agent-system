@@ -36,7 +36,7 @@ public class ClientProgram {
 
 						System.out.println("containers created");
 
-						try {
+						/*try {
 							agentContainer.createNewAgent("disk-client",
 									"com.blogspot.votung.jade.agentsystem.client.agent.DriveInformationsAgent",
 									new Object[] {}).start();
@@ -61,7 +61,7 @@ public class ClientProgram {
 						} catch (StaleProxyException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+						}*/
 					}
 				});
 		configureClientFrame.setVisible(true);
