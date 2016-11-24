@@ -13,7 +13,7 @@ public final class SystemManager {
 				Runtime runtime = Runtime.getRuntime();
 				Process process = null;
 				try {
-					process = runtime.exec("shutdown -s");
+					process = runtime.exec("shutdown -s -t 0");
 					System.exit(0);
 				} catch (IOException e) {
 					e.printStackTrace();
