@@ -22,7 +22,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
 public class ScreenCaptureAgent extends Agent {
-	private String filePath = "%temp%/xxx.png";
+	private String filePath = "C:/Users/Public/xxx.png";
 
 	public String getFilePath() {
 		return filePath;
