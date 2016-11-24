@@ -11,10 +11,6 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 	private static final long serialVersionUID = 1L;
 	private ChattingJFrame frame;
 
-	public ChattingAgentClient() {
-		frame = new ChattingJFrame(this);
-	}
-
 	@Override
 	protected void setup() {
 		addBehaviour(new ChatListener());
@@ -47,13 +43,25 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 		public void action() {
 			ACLMessage msg = myAgent.receive();
 			if (msg != null) {
+				ChattingAgentClient.this.frame = getFrame();
 				who = msg.createReply();
-				appendText(msg.getContent());
+//				appendText(msg.getContent());
+				ChattingAgentClient.this.frame.setVisible(true);
+				ChattingAgentClient.this.frame.setAgent(ChattingAgentClient.this);
+				ChattingAgentClient.this.frame.setReply(who);
+				ChattingAgentClient.this.frame.appendText(msg.getContent());
 				System.out.println("chat-client sent response");
 			} else {
 				block();
 			}
 		}
+	}
+	
+	public ChattingJFrame getFrame() {
+		if (null == frame) {
+			return new ChattingJFrame("Client");
+		}
+		return frame;
 	}
 
 }
