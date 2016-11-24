@@ -1,12 +1,11 @@
 package com.blogspot.votung.jade.agentsystem.client.agent;
 
 import javax.swing.JOptionPane;
-
-import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class ReceiveAgentClient extends Agent {
+public class ReceiveAgentClient extends MobileAgent {
+	private static final long serialVersionUID = 1L;
 	@Override
 	protected void setup() {
 		addBehaviour(new ChatListener());
@@ -18,9 +17,10 @@ public class ReceiveAgentClient extends Agent {
 		@Override
 		public void action() {
 			ACLMessage msg = myAgent.receive();
-			System.out.println("fuck yeahhh");
 			if (msg != null) {
-				JOptionPane.showMessageDialog(null, msg.getContent());
+				if (!isMoved(msg)) {
+					JOptionPane.showMessageDialog(null, msg.getContent());
+				}
 			} else {
 				block();
 			}
