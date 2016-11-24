@@ -20,8 +20,7 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 
 	@Override
 	public void appendText(String st) {
-		frame.setVisible(true);
-		frame.setTextDislay(st);
+		
 	}
 
 	ACLMessage who = null;
@@ -49,14 +48,11 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 				else {
 					who = msg.createReply();
 					ChattingAgentClient.this.frame = getFrame();
-					appendText(msg.getContent());
 					ChattingAgentClient.this.frame.setVisible(true);
 					ChattingAgentClient.this.frame.setAgent(ChattingAgentClient.this);
 					ChattingAgentClient.this.frame.setReply(who);
 					ChattingAgentClient.this.frame.appendText(msg.getContent());
 					System.out.println("chat-client sent response");
-					who = msg.createReply();
-					appendText(msg.getContent());
 					System.out.println("chat-client sent response");
 				}
 			} else {
