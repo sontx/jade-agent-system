@@ -20,7 +20,7 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 
 	@Override
 	public void appendText(String st) {
-		
+
 	}
 
 	ACLMessage who = null;
@@ -43,9 +43,10 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 		public void action() {
 			ACLMessage msg = myAgent.receive();
 			if (msg != null) {
-				if ("move".equals(msg.getOntology()))
+				if ("move".equals(msg.getOntology())) {
+					beforeMove();
 					doMove(new ContainerID(msg.getContent(), null));
-				else {
+				} else {
 					who = msg.createReply();
 					ChattingAgentClient.this.frame = getFrame();
 					ChattingAgentClient.this.frame.setVisible(true);
@@ -59,6 +60,11 @@ public class ChattingAgentClient extends Agent implements IChatAgenBase {
 				block();
 			}
 		}
+	}
+
+	@Override
+	protected void beforeMove() {
+		this.frame.dispose();
 	}
 
 	public ChattingJFrame getFrame() {
