@@ -367,13 +367,19 @@ public class ServerMonitorFrame extends JFrame {
 		lstLocation.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Location location = lstLocation.getSelectedValue();
-				try {
-					ServerMonitorFrame.this.labelHostname
-							.setText(InetAddress.getByName(location.getAddress()).getHostName());
-				} catch (UnknownHostException e) {
-					e.printStackTrace();
-				}
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						Location location = lstLocation.getSelectedValue();
+						try {
+							ServerMonitorFrame.this.labelHostname
+									.setText(InetAddress.getByName(location.getAddress()).getHostName());
+						} catch (UnknownHostException e) {
+							e.printStackTrace();
+						}
+					}
+				}).start();
+
 			}
 		});
 		lstLocation.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
