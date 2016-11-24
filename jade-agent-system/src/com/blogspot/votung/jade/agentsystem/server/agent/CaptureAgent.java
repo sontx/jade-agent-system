@@ -53,6 +53,7 @@ public class CaptureAgent extends Agent {
 			
 			String filePath = System.getProperty("imgdir") + "/" + System.currentTimeMillis() + ".png";
 			saveImage(decoded, filePath);
+			displayImage(filePath, null);
 		}
 
 		private void saveImage(byte[] decoded, String filePath) {
@@ -68,5 +69,16 @@ public class CaptureAgent extends Agent {
 			}
 		}
 
+		private void displayImage(String imagePath, String title) {
+			try {
+				BufferedImage buffer = ImageIO.read(new File(imagePath));
+				ImageIcon icon = new ImageIcon(buffer);
+				JLabel label = new JLabel(icon);
+				JOptionPane.showMessageDialog(null, label, title, JOptionPane.PLAIN_MESSAGE);
+			} catch (IOException e) {
+				String message = String.format("An error occurred when open image at path:\n%s.", imagePath);
+				JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 }
