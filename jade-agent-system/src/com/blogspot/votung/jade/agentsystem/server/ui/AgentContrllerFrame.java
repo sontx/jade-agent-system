@@ -11,30 +11,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AgentContrllerFrame extends JFrame {
-	private AgentController agentController;
-	
-	public AgentContrllerFrame(final AgentController agentController) {
-		this.agentController = agentController;
+	private ServerMonitorFrame agentController;
+	private String state;
+	public AgentContrllerFrame(final ServerMonitorFrame serverMonitorFrame) {
+		this.agentController = serverMonitorFrame;
 		setResizable(false);
 		setSize(331, 227);
 		getContentPane().setLayout(null);
-		try {
-			setTitle(agentController.getName());
-		} catch (StaleProxyException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
+		setTitle(serverMonitorFrame.getName());
 		JButton btnSuspended = new JButton("SUSPENDED");
 		btnSuspended.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					agentController.suspend();
-					JOptionPane.showMessageDialog(AgentContrllerFrame.this, "Suspend " + agentController.getName());
-				} catch (StaleProxyException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(AgentContrllerFrame.this, e1.getMessage());
-				}
+				serverMonitorFrame.suspend();
+				JOptionPane.showMessageDialog(AgentContrllerFrame.this, "Suspend " + serverMonitorFrame.getName());
 			}
 		});
 		btnSuspended.setBounds(118, 34, 103, 23);
@@ -43,14 +32,8 @@ public class AgentContrllerFrame extends JFrame {
 		JButton btnResume = new JButton("RESUME");
 		btnResume.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					agentController.activate();
-					JOptionPane.showMessageDialog(AgentContrllerFrame.this, "Resume " + agentController.getName());
-				} catch (StaleProxyException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(AgentContrllerFrame.this, e1.getMessage());
-				}
+				serverMonitorFrame.activate();
+				JOptionPane.showMessageDialog(AgentContrllerFrame.this, "Resume " + serverMonitorFrame.getName());
 			}
 		});
 		btnResume.setBounds(118, 65, 103, 23);
@@ -59,14 +42,8 @@ public class AgentContrllerFrame extends JFrame {
 		JButton btnKill = new JButton("KILL");
 		btnKill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					agentController.kill();
-					JOptionPane.showMessageDialog(AgentContrllerFrame.this, "Kill " + agentController.getName());
-				} catch (StaleProxyException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					JOptionPane.showMessageDialog(AgentContrllerFrame.this, e1.getMessage());
-				}
+				serverMonitorFrame.kill();
+				JOptionPane.showMessageDialog(AgentContrllerFrame.this, "Kill " + serverMonitorFrame.getName());
 			}
 		});
 		btnKill.setBounds(118, 99, 103, 23);

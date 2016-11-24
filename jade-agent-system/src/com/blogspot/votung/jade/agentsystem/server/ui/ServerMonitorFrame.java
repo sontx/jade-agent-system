@@ -35,6 +35,7 @@ import jade.wrapper.ControllerException;
 import jade.wrapper.StaleProxyException;
 
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -544,15 +545,11 @@ public class ServerMonitorFrame extends JFrame {
 	protected void controlAgent() {
 		AMSAgentDescriptionModel model = getSelectedAgent();
 		if (model != null) {
-			try {
-				AgentController agentController = ServerProgram.getMainContainer()
-						.getAgent(model.desc.getName().getLocalName());
-				AgentContrllerFrame agentContrllerFrame = new AgentContrllerFrame(agentController);
-				agentContrllerFrame.setVisible(true);
-			} catch (ControllerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			/*AgentController agentController = ServerProgram.getMainContainer()
+					.getAgent(model.desc.getName().getLocalName());
+			AgentContrllerFrame agentContrllerFrame = new AgentContrllerFrame(agentController);
+			agentContrllerFrame.setVisible(true);*/
+			new AgentContrllerFrame(ServerMonitorFrame.this);
 		}
 	}
 
@@ -740,5 +737,50 @@ public class ServerMonitorFrame extends JFrame {
 			listModel.addElement(location);
 		}
 		lstLocation.setModel(listModel);
+	}
+
+	public void suspend() {
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+		String who = model.desc.getName().getLocalName();
+		msg.addReceiver(new AID(who, AID.ISLOCALNAME));
+		msg.setOntology("suspend");
+		serverAgent.send(msg);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				JOptionPane.showMessageDialog(null, "Suspended");
+			}
+		});
+	}
+
+	public void activate() {
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+		String who = model.desc.getName().getLocalName();
+		msg.addReceiver(new AID(who, AID.ISLOCALNAME));
+		msg.setOntology("active");
+		serverAgent.send(msg);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				JOptionPane.showMessageDialog(null, "Actived");
+			}
+		});
+	}
+
+	public void kill() {
+		AMSAgentDescriptionModel model = getSelectedAgent();
+		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+		String who = model.desc.getName().getLocalName();
+		msg.addReceiver(new AID(who, AID.ISLOCALNAME));
+		msg.setOntology("delete");
+		serverAgent.send(msg);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				JOptionPane.showMessageDialog(null, "Deleted");
+			}
+		});
 	}
 }
