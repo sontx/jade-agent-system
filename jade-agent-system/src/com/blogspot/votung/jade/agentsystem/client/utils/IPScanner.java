@@ -64,7 +64,7 @@ public class IPScanner {
 	
 	private void checkIP(String ip) {
 		try {
-			if (InetAddress.getByName(ip).isReachable(2000)) {
+			if (InetAddress.getByName(ip).isReachable(3000)) {
 				InetAddress addr = InetAddress.getByName(ip);
 				String hostname = addr.getHostName();
 				add(ip, hostname);
