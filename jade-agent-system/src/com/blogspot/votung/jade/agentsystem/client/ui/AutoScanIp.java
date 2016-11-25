@@ -48,14 +48,9 @@ public class AutoScanIp extends JFrame {
 	}
 
 	private void addItems(JComboBox comboBoxListHosts) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				for (IPAndHostname i : list) {
-					comboBoxListHosts.addItem(i.getHostname() + " | " + i.getIp());
-				}
-			}
-		}).start();
+		for (IPAndHostname i : list) {
+			comboBoxListHosts.addItem(i.getHostname() + " | " + i.getIp());
+		}
 	}
 
 }
