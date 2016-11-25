@@ -56,11 +56,18 @@ public class ConfigureClientFrame extends JFrame {
 		txtPort.setBounds(90, 33, 231, 20);
 		getContentPane().add(txtPort);
 		txtPort.setColumns(10);
-		
+
 		JButton btnAuto = new JButton("Auto");
 		btnAuto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new AutoScanIp(ConfigureClientFrame.this);
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						new AutoScanIp(ConfigureClientFrame.this);
+					}
+				}).start();
+
 			}
 		});
 		btnAuto.setBounds(241, 7, 80, 23);
@@ -69,7 +76,8 @@ public class ConfigureClientFrame extends JFrame {
 
 	private void updateClientConfigure(int port, String address) {
 		if (onConfigurationChangedListener != null)
-			onConfigurationChangedListener.onConfigurationChanged(address, port);
+			onConfigurationChangedListener
+					.onConfigurationChanged(address, port);
 		dispose();
 	}
 
@@ -83,13 +91,14 @@ public class ConfigureClientFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtIP;
 	private JTextField txtPort;
-	
+
 	private OnConfigurationChangedListener onConfigurationChangedListener = null;
-	
-	public void setOnConfigurationChangedListener(OnConfigurationChangedListener listener) {
+
+	public void setOnConfigurationChangedListener(
+			OnConfigurationChangedListener listener) {
 		onConfigurationChangedListener = listener;
 	}
-	
+
 	public interface OnConfigurationChangedListener {
 		void onConfigurationChanged(String address, int port);
 	}

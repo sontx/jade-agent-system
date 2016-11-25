@@ -28,11 +28,15 @@ public class ClientProgram {
 						System.out.print("runtime created\n");
 
 						// now set the default Profile to start a container
-						ProfileImpl pContainer = new ProfileImpl(address, port, null);
-						System.out.println("Launching the agent container ..." + pContainer);
+						ProfileImpl pContainer = new ProfileImpl(address, port,
+								null);
+						System.out.println("Launching the agent container ..."
+								+ pContainer);
 
 						agentContainer = rt.createAgentContainer(pContainer);
-						System.out.println("Launching the agent container after ..." + pContainer);
+						System.out
+								.println("Launching the agent container after ..."
+										+ pContainer);
 
 						System.out.println("containers created");
 					}
