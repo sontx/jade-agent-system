@@ -9,12 +9,14 @@ import javax.swing.filechooser.FileSystemView;
 public class DriveInformation {
 	private String letter;
 	private String typeDescription;
+	private long capacityInGB;
 	
-	public DriveInformation(String letter, String typeDescription) {
+	public DriveInformation(String letter, String typeDescription, long capacityInGB) {
 		this.letter = letter;
 		this.typeDescription = typeDescription;
+		this.capacityInGB = capacityInGB;
 	}
-
+	
 	public static List<DriveInformation> getAll() {
 		List<DriveInformation> list = new ArrayList<DriveInformation>();
 		File[] paths;
@@ -25,11 +27,18 @@ public class DriveInformation {
 		for (File path : paths) {
 			String letter = path.toString().substring(0, 1);
 			String typeDescription = fsv.getSystemTypeDescription(path);
-			DriveInformation driveInformation = new DriveInformation(letter, typeDescription);
+			long capacityInGB = getCapacity(letter + ":/");
+			DriveInformation driveInformation = new DriveInformation(letter, typeDescription, capacityInGB);
 			list.add(driveInformation);
 		}
 		
 		return list;
+	}
+	
+	private static long getCapacity(String path) {
+		File file = new File(path);
+		long totalSpace = file.getTotalSpace();
+		return totalSpace / 1024 / 1024 / 1024;
 	}
 
 	public String getLetter() {
@@ -40,9 +49,13 @@ public class DriveInformation {
 		return typeDescription;
 	}
 	
+	public long getCapacityInGB() {
+		return capacityInGB;
+	}
+
 	@Override
 	public String toString() {
-		return letter + " " + typeDescription;
+		return letter + ": " + capacityInGB + "BG - " + typeDescription;
 	}
 
 }
